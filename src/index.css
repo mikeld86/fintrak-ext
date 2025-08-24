@@ -2,9 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  border-color: hsl(var(--primary) / 0.7);
-}
+@import "./styles/dark-mode.css";
 
 body {
   color: hsl(var(--foreground));
@@ -42,34 +40,6 @@ body {
   border: 0.5px solid hsl(var(--primary) / 0.7) !important;
 }
 
-/* Force blue borders only on elements that actually have borders */
-input, 
-textarea,
-.border,
-.rounded-lg,
-.rounded-md,
-.bg-card,
-.card,
-[class*="border-"] {
-  border-color: #3B82F6 !important;
-}
-
-/* Override all possible border color classes */
-.border-gray-200,
-.border-gray-300,
-.border-gray-400,
-.border-gray-500,
-.border-white,
-.border-slate-200,
-.border-slate-300 {
-  border-color: #3B82F6 !important;
-}
-
-input:focus,
-input:focus-visible {
-  border-color: #3B82F6 !important;
-  outline-color: #3B82F6 !important;
-}
 
 /* Ensure proper text contrast */
 .text-muted {
@@ -77,27 +47,27 @@ input:focus-visible {
 }
 
 /* Theme color variations - iOS color palette */
-body.theme-blue {
+body[data-theme="blue"] {
   --primary: hsl(211 100% 50%) !important; /* #007AFF */
   --primary-foreground: hsl(0 0% 100%) !important;
 }
 
-body.theme-pink {
+body[data-theme="pink"] {
   --primary: hsl(343 100% 59%) !important; /* #FF2D55 */
   --primary-foreground: hsl(0 0% 100%) !important;
 }
 
-body.theme-green {
+body[data-theme="green"] {
   --primary: hsl(133 73% 63%) !important; /* #4CD964 */
   --primary-foreground: hsl(0 0% 0%) !important;
 }
 
-body.theme-orange {
+body[data-theme="orange"] {
   --primary: hsl(35 100% 50%) !important; /* #FF9500 */
   --primary-foreground: hsl(0 0% 0%) !important;
 }
 
-body.theme-red {
+body[data-theme="red"] {
   --primary: hsl(355 100% 59%) !important; /* #FF3B30 */
   --primary-foreground: hsl(0 0% 100%) !important;
 }
