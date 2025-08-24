@@ -1,6 +1,5 @@
-const test = require('node:test')
-const assert = require('node:assert')
+import { test, expect } from 'vitest'
 
 test('sanity check', () => {
-  assert.strictEqual(true, true)
+  expect(true).toBe(true)
 })
