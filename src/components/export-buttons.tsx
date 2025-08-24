@@ -32,7 +32,7 @@ export function ExportButtons({ data }: ExportButtonsProps) {
         <Button 
           variant="ghost" 
           size="sm"
-          className="text-muted-foreground hover:text-foreground touch-manipulation"
+          className="text-muted-foreground hover:text-foreground"
         >
           <Download className="h-4 w-4 mr-1 sm:mr-2" />
           <span className="hidden sm:inline">Export</span>

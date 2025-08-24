@@ -38,7 +38,7 @@ export function QuickAddShortcuts({ onAddIncome, onAddExpense, weekNumber }: Qui
       {/* Collapsible Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between p-3 text-left hover:bg-primary/10 dark:hover:bg-primary/20 rounded-lg transition-colors touch-manipulation"
+        className="w-full flex items-center justify-between p-3 text-left hover:bg-primary/10 dark:hover:bg-primary/20 rounded-lg transition-colors touch-manipulation [-webkit-tap-highlight-color:transparent]"
       >
         <h3 className="text-sm font-medium text-primary dark:text-primary">
           Quick Add - Week {weekNumber}
@@ -63,7 +63,7 @@ export function QuickAddShortcuts({ onAddIncome, onAddExpense, weekNumber }: Qui
                   variant="income"
                   size="sm"
                   onClick={() => onAddIncome(shortcut.label, shortcut.amount)}
-                  className="text-xs h-7 px-2 touch-manipulation"
+                  className="text-xs h-7 px-2"
                 >
                   <Plus className="h-3 w-3 mr-1 flex-shrink-0" />
                   <span className="truncate">
@@ -84,7 +84,7 @@ export function QuickAddShortcuts({ onAddIncome, onAddExpense, weekNumber }: Qui
                   variant="expense"
                   size="sm"
                   onClick={() => onAddExpense(shortcut.label, shortcut.amount)}
-                  className="text-xs h-7 px-2 touch-manipulation"
+                  className="text-xs h-7 px-2"
                 >
                   <Plus className="h-3 w-3 mr-1 flex-shrink-0" />
                   <span className="truncate">

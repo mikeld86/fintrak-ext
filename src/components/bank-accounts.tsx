@@ -92,7 +92,7 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
             <div className="text-lg font-bold text-primary">
               {formatCurrency(totalBalance)}
             </div>
-            <Button onClick={addBankAccountRow} size="sm" className="bg-primary text-white touch-manipulation">
+            <Button onClick={addBankAccountRow} size="sm" className="bg-primary text-white">
               <Plus className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Add Account</span>
               <span className="sm:hidden">Add</span>
@@ -107,7 +107,7 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
                 value={row.label}
                 onChange={(e) => updateBankAccountRow(row.id, 'label', e.target.value)}
                 placeholder="Account name..."
-                className="flex-1 text-base sm:text-sm touch-manipulation"
+                className="flex-1 text-base sm:text-sm"
               />
               <div className="relative">
                 <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
@@ -117,7 +117,7 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
                   value={row.amount || ""}
                   onChange={(e) => updateBankAccountRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
                   placeholder="0.00"
-                  className="w-28 sm:w-32 pl-8 text-right text-base sm:text-sm touch-manipulation"
+                  className="w-28 sm:w-32 pl-8 text-right text-base sm:text-sm"
                   step="0.01"
                 />
               </div>
@@ -125,7 +125,7 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
                 variant="ghost"
                 size="sm"
                 onClick={() => removeBankAccountRow(row.id)}
-                className="text-destructive hover:text-destructive/80 p-2 touch-manipulation"
+                className="text-destructive hover:text-destructive/80 p-2"
               >
                 <Trash2 className="h-4 w-4" />
               </Button>
