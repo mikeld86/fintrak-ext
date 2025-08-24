@@ -77,27 +77,27 @@ input:focus-visible {
 }
 
 /* Theme color variations - iOS color palette */
-body.theme-blue {
+body[data-theme="blue"] {
   --primary: hsl(211 100% 50%) !important; /* #007AFF */
   --primary-foreground: hsl(0 0% 100%) !important;
 }
 
-body.theme-pink {
+body[data-theme="pink"] {
   --primary: hsl(343 100% 59%) !important; /* #FF2D55 */
   --primary-foreground: hsl(0 0% 100%) !important;
 }
 
-body.theme-green {
+body[data-theme="green"] {
   --primary: hsl(133 73% 63%) !important; /* #4CD964 */
   --primary-foreground: hsl(0 0% 0%) !important;
 }
 
-body.theme-orange {
+body[data-theme="orange"] {
   --primary: hsl(35 100% 50%) !important; /* #FF9500 */
   --primary-foreground: hsl(0 0% 0%) !important;
 }
 
-body.theme-red {
+body[data-theme="red"] {
   --primary: hsl(355 100% 59%) !important; /* #FF3B30 */
   --primary-foreground: hsl(0 0% 100%) !important;
 }

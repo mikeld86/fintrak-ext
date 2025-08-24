@@ -39,12 +39,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Apply theme class to body
   useEffect(() => {
     const body = document.body;
-    
-    // Remove any existing theme classes
-    body.classList.remove("theme-blue", "theme-pink", "theme-green", "theme-orange", "theme-red");
-    
-    // Add the current theme class
-    body.classList.add(`theme-${theme}`);
+    body.setAttribute("data-theme", theme);
   }, [theme]);
 
   const setTheme = async (newTheme: Theme) => {

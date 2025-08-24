@@ -29,7 +29,8 @@
 }
 
 /* Override the theme blue primary color for dark mode */
-.dark.theme-blue {
+body.dark[data-theme="blue"],
+.dark body[data-theme="blue"] {
   --primary: 217 91% 60%; /* Blue color that works in dark mode */
   --primary-foreground: 222.2 84% 4.9%;
 }
