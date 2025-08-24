@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "./styles/dark-mode.css";
 
 body {
   color: hsl(var(--foreground));
