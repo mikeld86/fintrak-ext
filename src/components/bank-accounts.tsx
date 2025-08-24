@@ -92,7 +92,7 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
             <div className="text-lg font-bold text-primary">
               {formatCurrency(totalBalance)}
             </div>
-            <Button onClick={addBankAccountRow} size="sm" className="bg-primary text-white">
+            <Button onClick={addBankAccountRow} size="sm">
               <Plus className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Add Account</span>
               <span className="sm:hidden">Add</span>

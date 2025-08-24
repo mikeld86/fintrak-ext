@@ -110,9 +110,9 @@ export default function LoginPage() {
                 </div>
               </div>
               
-              <Button 
-                type="submit" 
-                className="w-full bg-primary text-white hover:bg-primary/90"
+              <Button
+                type="submit"
+                className="w-full"
                 disabled={loginMutation.isPending}
               >
                 {loginMutation.isPending ? (

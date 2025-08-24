@@ -196,9 +196,8 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
           </div>
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
-              <Button 
-                size="sm" 
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              <Button
+                size="sm"
                 onClick={() => {
                   setEditingBatch(null);
                   resetForm();
@@ -326,9 +325,8 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                   >
                     Cancel
                   </Button>
-                  <Button 
-                    type="submit" 
-                    className="bg-primary text-primary-foreground hover:bg-primary/90"
+                  <Button
+                    type="submit"
                     disabled={saveBatchMutation.isPending}
                   >
                     {saveBatchMutation.isPending ? "Saving..." : editingBatch ? "Update" : "Add"} Batch

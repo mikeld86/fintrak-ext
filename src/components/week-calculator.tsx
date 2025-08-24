@@ -230,7 +230,7 @@ export function WeekCalculator({
             <h3 className="text-sm font-medium text-muted-foreground">
               Income {weekNumber === 1 ? "This Week" : "Next Week"}
             </h3>
-            <Button onClick={addIncomeRow} size="sm" className="bg-primary text-white">
+            <Button onClick={addIncomeRow} size="sm">
               <Plus className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Add Row</span>
               <span className="sm:hidden">Add</span>
@@ -282,7 +282,7 @@ export function WeekCalculator({
             <h3 className="text-sm font-medium text-muted-foreground">
               Expenses {weekNumber === 1 ? "This Week" : "Next Week"}
             </h3>
-            <Button onClick={addExpenseRow} size="sm" className="bg-primary text-white">
+            <Button onClick={addExpenseRow} size="sm">
               <Plus className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Add Row</span>
               <span className="sm:hidden">Add</span>
