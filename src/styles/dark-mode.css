@@ -35,12 +35,7 @@ body.dark[data-theme="blue"],
   --primary-foreground: 222.2 84% 4.9%;
 }
 
-/* Ensure proper background and text colors */
-.dark {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-}
-
+/* Ensure elements use dark theme borders */
 .dark * {
   border-color: hsl(var(--border));
 }
@@ -93,11 +88,4 @@ body.dark[data-theme="blue"],
 /* Border colors */
 .dark .border-border {
   border-color: hsl(var(--border));
-}
-
-/* Make sure the main page background is dark */
-.dark body,
-.dark #root,
-.dark main {
-  background-color: hsl(var(--background));
 }
