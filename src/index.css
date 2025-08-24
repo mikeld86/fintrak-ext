@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import "./styles/dark-mode.css";
+@import "./styles/sidebar.css";
 
 :root {
   --background: 222.2 84% 4.9%;
