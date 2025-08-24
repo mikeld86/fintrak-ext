@@ -335,7 +335,7 @@ export default function Home() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <Calculator className="h-8 w-8 animate-spin text-primary mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-300">Loading your financial data...</p>
+          <p className="text-muted-foreground">Loading your financial data...</p>
         </div>
       </div>
     );
@@ -583,7 +583,7 @@ export default function Home() {
           <DialogHeader>
             <DialogTitle>Clear All Data</DialogTitle>
           </DialogHeader>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-muted-foreground">
             Are you sure you want to clear all financial data? This action cannot be undone.
           </p>
           <DialogFooter>
