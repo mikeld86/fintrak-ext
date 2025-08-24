@@ -46,8 +46,7 @@ body.dark[data-theme="blue"],
 }
 
 /* Card backgrounds */
-.dark .bg-card,
-.dark .bg-white {
+.dark .bg-card {
   background-color: hsl(var(--card));
   color: hsl(var(--card-foreground));
 }
@@ -82,17 +81,17 @@ body.dark[data-theme="blue"],
   color: hsl(var(--primary));
 }
 
-/* Make sure gray backgrounds use card color in dark mode */
-.dark .bg-gray-50 {
-  background-color: hsl(var(--card));
-}
-
-.dark .bg-gray-100 {
+/* Token-based background helpers */
+.dark .bg-muted {
   background-color: hsl(var(--muted));
 }
 
+.dark .bg-background {
+  background-color: hsl(var(--background));
+}
+
 /* Border colors */
-.dark .border-gray-200 {
+.dark .border-border {
   border-color: hsl(var(--border));
 }
 
