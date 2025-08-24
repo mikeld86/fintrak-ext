@@ -125,7 +125,7 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
                 variant="ghost"
                 size="sm"
                 onClick={() => removeBankAccountRow(row.id)}
-                className="text-red-500 hover:text-red-700 p-2 touch-manipulation"
+                className="text-destructive hover:text-destructive/80 p-2 touch-manipulation"
               >
                 <Trash2 className="h-4 w-4" />
               </Button>
