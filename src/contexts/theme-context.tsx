@@ -25,10 +25,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   // Initialize theme on mount
   useEffect(() => {
-    // Set initial theme class on body
-    const body = document.body;
-    body.classList.remove("theme-blue", "theme-pink", "theme-green", "theme-orange", "theme-red");
-    body.classList.add("theme-blue"); // Default theme
+    // Set default theme attribute on body
+    document.body.setAttribute("data-theme", "blue");
   }, []);
 
   // Detect if device is mobile
@@ -130,19 +128,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   }, [darkMode]);
 
-  // Apply theme classes to body and document element
+  // Apply theme attribute and dark mode classes
   useEffect(() => {
     const body = document.body;
     const html = document.documentElement;
-    
-    // Remove any existing theme classes
-    body.classList.remove("theme-blue", "theme-pink", "theme-green", "theme-orange", "theme-red");
-    html.classList.remove("theme-blue", "theme-pink", "theme-green", "theme-orange", "theme-red");
-    
-    // Add the current theme class to both
-    body.classList.add(`theme-${theme}`);
-    html.classList.add(`theme-${theme}`);
-    
+
+    // Set the current theme attribute
+    body.setAttribute("data-theme", theme);
+
     // Apply dark mode to both body and html element for Tailwind compatibility
     if (darkMode) {
       body.classList.add("dark");
@@ -154,7 +147,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       html.classList.remove("dark");
       html.setAttribute("data-theme", "light");
     }
-    
+
     console.log('Applied theme:', theme, 'and dark mode:', darkMode, 'to both body and html elements');
     console.log('HTML classes:', html.className);
     console.log('Body classes:', body.className);
