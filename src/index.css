@@ -112,11 +112,6 @@ body[data-theme="red"] {
       min-height: 44px; /* iOS recommended touch target size */
     }
     
-    /* Improve touch targets */
-    .touch-manipulation {
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-    }
   }
 
   /* iOS specific optimizations */
