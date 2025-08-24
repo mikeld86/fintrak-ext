@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  border-color: hsl(var(--primary) / 0.7);
-}
 
 body {
   color: hsl(var(--foreground));
@@ -42,34 +39,6 @@ body {
   border: 0.5px solid hsl(var(--primary) / 0.7) !important;
 }
 
-/* Force blue borders only on elements that actually have borders */
-input, 
-textarea,
-.border,
-.rounded-lg,
-.rounded-md,
-.bg-card,
-.card,
-[class*="border-"] {
-  border-color: #3B82F6 !important;
-}
-
-/* Override all possible border color classes */
-.border-gray-200,
-.border-gray-300,
-.border-gray-400,
-.border-gray-500,
-.border-white,
-.border-slate-200,
-.border-slate-300 {
-  border-color: #3B82F6 !important;
-}
-
-input:focus,
-input:focus-visible {
-  border-color: #3B82F6 !important;
-  outline-color: #3B82F6 !important;
-}
 
 /* Ensure proper text contrast */
 .text-muted {

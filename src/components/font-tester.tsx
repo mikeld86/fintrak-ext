@@ -62,7 +62,7 @@ export function FontTester() {
   };
 
   return (
-    <div className="fixed top-20 right-4 z-[60] bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg border">
+    <div className="fixed top-20 right-4 z-[60] bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg border border-primary">
       <h3 className="text-sm font-medium mb-3">Font Tester</h3>
       <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
         Current: {appliedFont}
@@ -85,9 +85,9 @@ export function FontTester() {
       >
         Apply Font
       </Button>
-      <Button 
-        variant="outline" 
-        className="mt-1 w-full" 
+      <Button
+        variant="outline"
+        className="mt-1 w-full"
         onClick={resetFont}
       >
         Reset to Default
