@@ -54,7 +54,7 @@ body.dark[data-theme="blue"],
 }
 
 .dark input:focus {
-  ring-color: hsl(var(--ring));
+  --tw-ring-color: hsl(var(--ring));
 }
 
 /* Button styling */
