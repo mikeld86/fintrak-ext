@@ -19,7 +19,7 @@ exports.handler = async (event, context) => {
 
   try {
     const { httpMethod } = event;
-    const userId = 1;
+    const userId = "46429020";
 
     if (httpMethod === 'GET') {
       const { data, error } = await supabase
@@ -40,12 +40,20 @@ exports.handler = async (event, context) => {
     if (httpMethod === 'POST') {
       const requestData = JSON.parse(event.body);
       
+      // Map frontend camelCase to database snake_case  
+      const dbData = {
+        user_id: userId,
+        batch_id: requestData.batchId,
+        qty: requestData.qty || requestData.quantity,
+        price_per_unit: requestData.pricePerUnit || requestData.price_per_unit,
+        total_price: requestData.totalPrice || requestData.total_price,
+        amount_paid: requestData.amountPaid || requestData.amount_paid,
+        notes: requestData.notes || ''
+      };
+      
       const { data, error } = await supabase
         .from('sales_records')
-        .insert({
-          user_id: userId,
-          ...requestData
-        })
+        .insert(dbData)
         .select()
         .single();
 

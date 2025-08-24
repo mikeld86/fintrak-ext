@@ -19,7 +19,7 @@ exports.handler = async (event, context) => {
 
   try {
     const { httpMethod } = event;
-    const userId = 1;
+    const userId = "46429020";
 
     if (httpMethod === 'GET') {
       const { data, error } = await supabase
@@ -40,12 +40,21 @@ exports.handler = async (event, context) => {
     if (httpMethod === 'POST') {
       const requestData = JSON.parse(event.body);
       
+      // Map frontend camelCase to database snake_case
+      const dbData = {
+        user_id: userId,
+        batch_name: requestData.batchName,
+        product_name: requestData.productName,
+        qty_in_stock: requestData.qtyInStock || 0,
+        qty_sold: requestData.qtySold || 0,
+        cost_per_unit: requestData.unitCost || '0',
+        projected_sale_cost_per_unit: requestData.projectedSaleCostPerUnit || '0',
+        actual_sale_cost_per_unit: requestData.actualSaleCostPerUnit || '0'
+      };
+      
       const { data, error } = await supabase
         .from('inventory_batches')
-        .insert({
-          user_id: userId,
-          ...requestData
-        })
+        .insert(dbData)
         .select()
         .single();
 
@@ -53,6 +62,39 @@ exports.handler = async (event, context) => {
 
       return {
         statusCode: 201,
+        headers,
+        body: JSON.stringify(data)
+      };
+    }
+
+    if (httpMethod === 'PUT') {
+      const requestData = JSON.parse(event.body);
+      const pathParts = event.path.split('/');
+      const batchId = pathParts[pathParts.length - 1];
+      
+      // Map frontend camelCase to database snake_case
+      const dbData = {
+        batch_name: requestData.batchName,
+        product_name: requestData.productName,
+        qty_in_stock: requestData.qtyInStock || 0,
+        qty_sold: requestData.qtySold || 0,
+        cost_per_unit: requestData.unitCost || '0',
+        projected_sale_cost_per_unit: requestData.projectedSaleCostPerUnit || '0',
+        actual_sale_cost_per_unit: requestData.actualSaleCostPerUnit || '0'
+      };
+      
+      const { data, error } = await supabase
+        .from('inventory_batches')
+        .update(dbData)
+        .eq('id', batchId)
+        .eq('user_id', userId)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      return {
+        statusCode: 200,
         headers,
         body: JSON.stringify(data)
       };
