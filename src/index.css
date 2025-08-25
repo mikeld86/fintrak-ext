@@ -94,6 +94,7 @@ body[data-theme="yellow"] {
   --border: var(--primary);
   --ring: var(--primary);
 }
+
 body.dark[data-theme="blue"],
 .dark body[data-theme="blue"] {
   --primary: 218 100% 58%;
