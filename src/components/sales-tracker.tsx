@@ -493,7 +493,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                         deleteSaleMutation.mutate(record.id);
                       }
                     }}
-                    className="border-destructive/30 text-destructive hover:bg-destructive/10 h-8 px-2 ml-4"
+                    className="border-red-300 text-destructive hover:bg-red-50 h-8 px-2 ml-4"
                   >
                     <Trash2 className="h-3 w-3" />
                   </Button>
