@@ -412,7 +412,13 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                         </div>
                         <div>
                           <span className="text-muted-foreground">Projected Profit/Unit:</span>
-                          <div className={`font-medium ${breakEven.projectedProfitPerUnit >= 0 ? 'text-success' : 'text-destructive'}`}>
+                          <div
+                            className={`font-medium ${
+                              breakEven.projectedProfitPerUnit >= 0
+                                ? 'text-success'
+                                : 'text-destructive'
+                            }`}
+                          >
                             {formatCurrency(breakEven.projectedProfitPerUnit)}
                           </div>
                         </div>

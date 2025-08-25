@@ -396,13 +396,21 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
           </div>
           <div className="text-center">
             <div className="text-sm text-muted-foreground">Profit</div>
-            <div className={`text-lg font-semibold ${summary.profit >= 0 ? 'text-success' : 'text-destructive'}`}> 
+            <div
+              className={`text-lg font-semibold ${
+                summary.profit >= 0 ? 'text-success' : 'text-destructive'
+              }`}
+            >
               {formatCurrency(summary.profit)}
             </div>
           </div>
           <div className="text-center">
             <div className="text-sm text-muted-foreground">Margin</div>
-            <div className={`text-lg font-semibold ${summary.profitMargin >= 0 ? 'text-success' : 'text-destructive'}`}> 
+            <div
+              className={`text-lg font-semibold ${
+                summary.profitMargin >= 0 ? 'text-success' : 'text-destructive'
+              }`}
+            >
               {summary.profitMargin.toFixed(1)}%
             </div>
           </div>
@@ -448,7 +456,13 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                       </div>
                       <div>
                         <span className="text-muted-foreground">Balance Owing:</span>
-                        <div className={`font-medium ${parseFloat(record.balanceOwing) > 0 ? 'text-destructive' : 'text-success'}`}>
+                        <div
+                          className={`font-medium ${
+                            parseFloat(record.balanceOwing) > 0
+                              ? 'text-destructive'
+                              : 'text-success'
+                          }`}
+                        >
                           {formatCurrency(parseFloat(record.balanceOwing))}
                         </div>
                       </div>
