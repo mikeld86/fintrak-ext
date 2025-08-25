@@ -7,9 +7,15 @@ import { SalesTracker } from "@/components/sales-tracker";
 import { useLocation } from "wouter";
 import type { InventoryBatch } from "@shared/schema";
 import { useTheme } from "@/contexts/simple-theme-context";
+
 import blueLogo from "@/assets/Blue.svg";
 import pinkLogo from "@/assets/Pink.svg";
 import yellowLogo from "@/assets/Yellow.svg";
+
+import blueLogo from "../assets/Blue.svg";
+import pinkLogo from "../assets/Pink.svg";
+import yellowLogo from "../assets/Yellow.svg";
+
 
 export default function InventoryPage() {
   const [, setLocation] = useLocation();
