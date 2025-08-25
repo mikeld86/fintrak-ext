@@ -102,12 +102,19 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
   const deleteBatchMutation = useMutation({
     mutationFn: async (batchId: string) => {
       try {
-        await apiRequest("DELETE", `/api/inventory-batches/${batchId}`);
-      } catch (error) {
-        // Offline mode - remove from localStorage
-        const localData = JSON.parse(localStorage.getItem('fintrak-inventory-batches') || '[]');
-        const filtered = localData.filter((b: any) => b.id !== batchId);
-        localStorage.setItem('fintrak-inventory-batches', JSON.stringify(filtered));
+        const res = await apiRequest("DELETE", `/api/inventory-batches/${batchId}`);
+        if (res.status !== 204) {
+          throw new Error(`Unexpected response: ${res.status}`);
+        }
+      } catch (error: any) {
+        if (error instanceof TypeError || error.message.includes('Failed to fetch')) {
+          // Offline mode - remove from localStorage
+          const localData = JSON.parse(localStorage.getItem('fintrak-inventory-batches') || '[]');
+          const filtered = localData.filter((b: any) => b.id !== batchId);
+          localStorage.setItem('fintrak-inventory-batches', JSON.stringify(filtered));
+        } else {
+          throw error;
+        }
       }
     },
     onSuccess: () => {

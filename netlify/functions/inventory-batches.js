@@ -21,6 +21,23 @@ exports.handler = async (event, context) => {
     const { httpMethod } = event;
     const userId = "46429020";
 
+    // Helper to convert database fields (snake_case) to camelCase
+    const toCamelCase = (batch) => ({
+      id: batch.id,
+      userId: batch.user_id,
+      batchName: batch.batch_name,
+      productName: batch.product_name,
+      totalPricePaid: batch.total_price_paid,
+      numberOfUnits: batch.number_of_units,
+      unitCost: batch.unit_cost,
+      projectedSaleCostPerUnit: batch.projected_sale_cost_per_unit,
+      actualSaleCostPerUnit: batch.actual_sale_cost_per_unit,
+      qtyInStock: batch.qty_in_stock,
+      qtySold: batch.qty_sold,
+      createdAt: batch.created_at,
+      updatedAt: batch.updated_at,
+    });
+
     if (httpMethod === 'GET') {
       const { data, error } = await supabase
         .from('inventory_batches')
@@ -149,6 +166,35 @@ exports.handler = async (event, context) => {
         statusCode: 200,
         headers,
         body: JSON.stringify(camelData)
+      };
+    }
+
+    if (httpMethod === 'DELETE') {
+      const pathParts = event.path.split('/');
+      const batchId = pathParts[pathParts.length - 1];
+
+      const { data, error } = await supabase
+        .from('inventory_batches')
+        .delete()
+        .eq('id', batchId)
+        .eq('user_id', userId)
+        .select()
+        .single();
+
+      if (error && error.code === 'PGRST116') {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ error: 'Batch not found' })
+        };
+      }
+
+      if (error) throw error;
+
+      return {
+        statusCode: 204,
+        headers,
+        body: ''
       };
     }
 
