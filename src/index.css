@@ -58,7 +58,8 @@
 
 /* Override input styling for dark theme */
 .dark-input {
-  @apply bg-input text-foreground border-[0.5px] border-primary border-opacity-70;
+  @apply bg-input text-foreground border-primary border-opacity-70;
+  border-width: 0.5px;
 }
 
 
