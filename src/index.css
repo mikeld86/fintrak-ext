@@ -22,7 +22,7 @@
   --input: 222.86 84% 4.9%;
   /* Match border and ring colors to the current theme */
   --ring: var(--primary);
-  --border: var(--primary);
+  --border: 215 20% 25%;
   --card-border: var(--primary);
   --radius: 0.75rem;
 }
@@ -61,7 +61,7 @@
 /* Override input styling for dark theme */
 @layer components {
   .dark-input {
-    @apply bg-input text-foreground border-primary border-opacity-70;
+    @apply bg-input text-foreground border-border;
     border-width: 0.5px;
   }
 
@@ -75,7 +75,7 @@ body[data-theme="blue"] {
   --primary: 218 100% 58%; /* #2979ff */
   --secondary: 171 100% 54%; /* #16ffdb */
   --primary-foreground: 0 0% 100%;
-  --border: var(--primary);
+  --border: 215 20% 25%;
   --ring: var(--primary);
 }
 
@@ -83,7 +83,7 @@ body[data-theme="pink"] {
   --primary: 328 100% 50%; /* #ff0086 */
   --secondary: 260 80% 50%; /* #5c19e5 */
   --primary-foreground: 0 0% 100%;
-  --border: var(--primary);
+  --border: 215 20% 25%;
   --ring: var(--primary);
 }
 
@@ -91,7 +91,7 @@ body[data-theme="yellow"] {
   --primary: 60 100% 50%; /* #ffff00 */
   --secondary: 119 100% 50%; /* #06ff00 */
   --primary-foreground: 0 0% 0%;
-  --border: var(--primary);
+  --border: 215 20% 25%;
   --ring: var(--primary);
 }
 
@@ -100,7 +100,7 @@ body.dark[data-theme="blue"],
   --primary: 218 100% 58%;
   --secondary: 171 100% 54%;
   --primary-foreground: 222.2 84% 4.9%;
-  --border: var(--primary);
+  --border: 215 20% 25%;
   --ring: var(--primary);
 }
 
@@ -109,7 +109,7 @@ body.dark[data-theme="pink"],
   --primary: 328 100% 50%;
   --secondary: 260 80% 50%;
   --primary-foreground: 222.2 84% 4.9%;
-  --border: var(--primary);
+  --border: 215 20% 25%;
   --ring: var(--primary);
 }
 
@@ -118,7 +118,7 @@ body.dark[data-theme="yellow"],
   --primary: 60 100% 50%;
   --secondary: 119 100% 50%;
   --primary-foreground: 222.2 84% 4.9%;
-  --border: var(--primary);
+  --border: 215 20% 25%;
   --ring: var(--primary);
 }
 
