@@ -1,7 +1,6 @@
 import React from "react";
 import { useTheme } from "@/contexts/simple-theme-context";
 import { themeColors, Theme } from "@/constants/theme";
-import "./theme-selector.css";
 
 const themeOptions = Object.keys(themeColors) as Theme[];
 
@@ -19,8 +18,8 @@ export function ThemeSelector() {
             key={id}
             data-theme={id}
             onClick={() => setTheme(id)}
-            className={`theme-button w-11 h-11 rounded-full border-2 border-primary shadow-md transition-all bg-primary focus-visible:ring-2 focus-visible:ring-offset-2 ${
-              theme === id ? "ring-2" : ""
+            className={`w-10 h-4 rounded-full border-2 shadow-md transition-all bg-[hsl(var(--primary))] border-[hsl(var(--primary))] ${
+              theme === id ? "ring-2 ring-[hsl(var(--primary))]" : ""
             }`}
             aria-label={`${id.charAt(0).toUpperCase() + id.slice(1)} theme`}
           />
