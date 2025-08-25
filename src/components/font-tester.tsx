@@ -62,7 +62,7 @@ export function FontTester() {
   };
 
   return (
-    <div className="fixed top-20 right-4 z-[60] bg-card p-4 rounded-lg shadow-lg border border-primary">
+    <div className="fixed top-20 right-4 z-[60] bg-card p-4 rounded-lg shadow-lg border border-border">
       <h3 className="text-sm font-medium mb-3">Font Tester</h3>
       <p className="text-xs text-muted-foreground mb-2">
         Current: {appliedFont}
