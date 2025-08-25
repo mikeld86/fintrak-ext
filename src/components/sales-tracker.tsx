@@ -473,13 +473,13 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                   
                   <Button
                     size="sm"
-                    variant="outline"
+                    variant="destructive"
                     onClick={() => {
                       if (confirm("Delete this sales record?")) {
                         deleteSaleMutation.mutate(record.id);
                       }
                     }}
-                    className="border-red-300 text-red-600 hover:bg-red-50 h-8 px-2 ml-4"
+                    className="h-8 px-2 ml-4"
                   >
                     <Trash2 className="h-3 w-3" />
                   </Button>

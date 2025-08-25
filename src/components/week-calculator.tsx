@@ -182,10 +182,9 @@ export function WeekCalculator({
           </div>
           {canRemove && onRemove && (
             <Button
-              variant="ghost" 
+              variant="destructive"
               size="sm"
               onClick={onRemove}
-              className="text-destructive hover:text-destructive/80 hover:bg-destructive/10"
             >
               <X className="h-4 w-4" />
             </Button>
@@ -251,10 +250,10 @@ export function WeekCalculator({
                   className="w-28 sm:w-32 text-base bg-input text-foreground border-border"
                 />
                 <Button
-                  variant="ghost"
+                  variant="destructive"
                   size="sm"
                   onClick={() => removeIncomeRow(row.id)}
-                  className="text-destructive hover:text-destructive/80 p-2"
+                  className="p-2"
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -297,10 +296,10 @@ export function WeekCalculator({
                   className="w-28 sm:w-32 text-base bg-input text-foreground border-border"
                 />
                 <Button
-                  variant="ghost"
+                  variant="destructive"
                   size="sm"
                   onClick={() => removeExpenseRow(row.id)}
-                  className="text-destructive hover:text-destructive/80 p-2"
+                  className="p-2"
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
