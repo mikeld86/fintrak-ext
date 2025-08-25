@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import fs from "fs";
 import path from "path";
 
-const themes = ["blue", "pink", "green", "orange", "red"] as const;
+const themes = ["blue", "pink", "yellow"] as const;
 
 describe("theme variations", () => {
   it("defines dark mode overrides for each theme", () => {

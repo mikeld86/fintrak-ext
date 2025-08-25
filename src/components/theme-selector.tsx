@@ -19,8 +19,8 @@ export function ThemeSelector() {
             key={id}
             data-theme={id}
             onClick={() => setTheme(id)}
-            className={`theme-button w-10 h-4 rounded-full border-2 shadow-md transition-all bg-primary ${
-              theme === id ? "border-white ring-2" : "border-gray-300"
+            className={`theme-button w-10 h-4 rounded-full border-2 border-primary shadow-md transition-all bg-primary ${
+              theme === id ? "ring-2" : ""
             }`}
             aria-label={`${id.charAt(0).toUpperCase() + id.slice(1)} theme`}
           />

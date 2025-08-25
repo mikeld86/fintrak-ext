@@ -95,7 +95,7 @@ export function CashCalculator({ denominations, onUpdate }: CashCalculatorProps)
               </div>
             );
           })}
-          <div className="border-t border-border pt-3">
+          <div className="border-t border-primary pt-3">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium text-muted-foreground">
                 Notes Total:
@@ -140,7 +140,7 @@ export function CashCalculator({ denominations, onUpdate }: CashCalculatorProps)
               </div>
             );
           })}
-          <div className="border-t border-border pt-3">
+          <div className="border-t border-primary pt-3">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium text-muted-foreground">
                 Coins Total:
