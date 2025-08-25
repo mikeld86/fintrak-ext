@@ -1,11 +1,9 @@
-export type Theme = "blue" | "pink" | "green" | "orange" | "red";
+export type Theme = "blue" | "pink" | "yellow";
 
-export const themeColors: Record<Theme, string> = {
-  blue: "#007AFF",
-  pink: "#FF2D55",
-  green: "#4CD964",
-  orange: "#FF9500",
-  red: "#FF3B30",
+export const themeColors: Record<Theme, { primary: string; secondary: string }> = {
+  blue: { primary: "#2979ff", secondary: "#16ffdb" },
+  pink: { primary: "#ff0086", secondary: "#5c19e5" },
+  yellow: { primary: "#ffff00", secondary: "#06ff00" },
 };
 
 function hexToRgb(hex: string): [number, number, number] {
@@ -27,7 +25,7 @@ function rgbToHex(r: number, g: number, b: number): string {
 }
 
 export function getRingColor(theme: Theme, amount = 0.5): string {
-  const [r, g, b] = hexToRgb(themeColors[theme]);
+  const [r, g, b] = hexToRgb(themeColors[theme].primary);
   const ringR = r + (255 - r) * amount;
   const ringG = g + (255 - g) * amount;
   const ringB = b + (255 - b) * amount;
