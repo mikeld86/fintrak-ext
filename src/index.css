@@ -157,7 +157,7 @@ body.dark[data-theme="red"],
   /* Space Grotesk font applied globally */
   body {
     @apply font-sans antialiased;
-    font-family: "Space Grotesk", var(--font-sans), sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     color: hsl(var(--foreground));
     background: hsl(var(--background));
   }
