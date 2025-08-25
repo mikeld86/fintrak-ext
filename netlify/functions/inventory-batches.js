@@ -30,10 +30,26 @@ exports.handler = async (event, context) => {
 
       if (error) throw error;
 
+      const camelData = (data || []).map((row) => ({
+        id: row.id,
+        userId: row.user_id,
+        batchName: row.batch_name,
+        productName: row.product_name,
+        totalPricePaid: row.total_price_paid,
+        numberOfUnits: row.number_of_units,
+        unitCost: row.unit_cost,
+        projectedSaleCostPerUnit: row.projected_sale_cost_per_unit,
+        actualSaleCostPerUnit: row.actual_sale_cost_per_unit,
+        qtyInStock: row.qty_in_stock,
+        qtySold: row.qty_sold,
+        createdAt: row.created_at,
+        updatedAt: row.updated_at,
+      }));
+
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify(data || [])
+        body: JSON.stringify(camelData)
       };
     }
 
@@ -45,11 +61,13 @@ exports.handler = async (event, context) => {
         user_id: userId,
         batch_name: requestData.batchName,
         product_name: requestData.productName,
+        total_price_paid: requestData.totalPricePaid || '0',
+        number_of_units: requestData.numberOfUnits || 0,
+        unit_cost: requestData.unitCost || '0',
+        projected_sale_cost_per_unit: requestData.projectedSaleCostPerUnit || '0',
+        actual_sale_cost_per_unit: requestData.actualSaleCostPerUnit || '0',
         qty_in_stock: requestData.qtyInStock || 0,
         qty_sold: requestData.qtySold || 0,
-        cost_per_unit: requestData.unitCost || '0',
-        projected_sale_cost_per_unit: requestData.projectedSaleCostPerUnit || '0',
-        actual_sale_cost_per_unit: requestData.actualSaleCostPerUnit || '0'
       };
       
       const { data, error } = await supabase
@@ -60,10 +78,26 @@ exports.handler = async (event, context) => {
 
       if (error) throw error;
 
+      const camelData = {
+        id: data.id,
+        userId: data.user_id,
+        batchName: data.batch_name,
+        productName: data.product_name,
+        totalPricePaid: data.total_price_paid,
+        numberOfUnits: data.number_of_units,
+        unitCost: data.unit_cost,
+        projectedSaleCostPerUnit: data.projected_sale_cost_per_unit,
+        actualSaleCostPerUnit: data.actual_sale_cost_per_unit,
+        qtyInStock: data.qty_in_stock,
+        qtySold: data.qty_sold,
+        createdAt: data.created_at,
+        updatedAt: data.updated_at,
+      };
+
       return {
         statusCode: 201,
         headers,
-        body: JSON.stringify(data)
+        body: JSON.stringify(camelData)
       };
     }
 
@@ -76,11 +110,13 @@ exports.handler = async (event, context) => {
       const dbData = {
         batch_name: requestData.batchName,
         product_name: requestData.productName,
+        total_price_paid: requestData.totalPricePaid || '0',
+        number_of_units: requestData.numberOfUnits || 0,
+        unit_cost: requestData.unitCost || '0',
+        projected_sale_cost_per_unit: requestData.projectedSaleCostPerUnit || '0',
+        actual_sale_cost_per_unit: requestData.actualSaleCostPerUnit || '0',
         qty_in_stock: requestData.qtyInStock || 0,
         qty_sold: requestData.qtySold || 0,
-        cost_per_unit: requestData.unitCost || '0',
-        projected_sale_cost_per_unit: requestData.projectedSaleCostPerUnit || '0',
-        actual_sale_cost_per_unit: requestData.actualSaleCostPerUnit || '0'
       };
       
       const { data, error } = await supabase
@@ -93,10 +129,26 @@ exports.handler = async (event, context) => {
 
       if (error) throw error;
 
+      const camelData = {
+        id: data.id,
+        userId: data.user_id,
+        batchName: data.batch_name,
+        productName: data.product_name,
+        totalPricePaid: data.total_price_paid,
+        numberOfUnits: data.number_of_units,
+        unitCost: data.unit_cost,
+        projectedSaleCostPerUnit: data.projected_sale_cost_per_unit,
+        actualSaleCostPerUnit: data.actual_sale_cost_per_unit,
+        qtyInStock: data.qty_in_stock,
+        qtySold: data.qty_sold,
+        createdAt: data.created_at,
+        updatedAt: data.updated_at,
+      };
+
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify(data)
+        body: JSON.stringify(camelData)
       };
     }
 
