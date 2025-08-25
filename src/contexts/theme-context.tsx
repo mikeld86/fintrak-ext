@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { apiRequest } from "@/lib/queryClient";
 
-type Theme = "blue" | "pink" | "green" | "orange" | "red";
+type Theme = "blue" | "pink" | "yellow";
 
 type ThemeProviderState = {
   theme: Theme;

@@ -2,7 +2,10 @@ import { Package, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeSelector } from "@/components/theme-selector";
 import { ExportButtons } from "@/components/export-buttons";
-import fintrakLogo from "../assets/fintrak-logo.png";
+import { useTheme } from "@/contexts/simple-theme-context";
+import blueLogo from "../assets/Blue.svg";
+import pinkLogo from "../assets/Pink.svg";
+import yellowLogo from "../assets/Yellow.svg";
 import { formatCurrency } from "@/lib/utils";
 import type { FinancialRow } from "@shared/schema";
 
@@ -45,12 +48,15 @@ export function HomeHeader({
     totalBankBalance,
   };
 
+  const { theme } = useTheme();
+  const logos = { blue: blueLogo, pink: pinkLogo, yellow: yellowLogo };
+
   return (
     <header className="sticky top-0 z-50 bg-background shadow-sm border-b border-border backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
         <div className="flex justify-between items-center h-14 sm:h-16">
           <div className="flex items-center min-w-0">
-            <img src={fintrakLogo} alt="FINTRAK Logo" className="h-7 sm:h-9 object-contain" />
+            <img src={logos[theme]} alt="FINTRAK Logo" className="h-7 sm:h-9 object-contain" />
           </div>
 
           {/* Desktop controls */}
