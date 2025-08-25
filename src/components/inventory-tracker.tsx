@@ -41,11 +41,16 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
           credentials: "include",
         });
         if (response.status === 401) {
+          console.log("Loading inventory from localStorage");
           // Load from localStorage when server unavailable
           const localData = localStorage.getItem('fintrak-inventory-batches');
           return localData ? JSON.parse(localData) : [];
         }
-        if (!response.ok) return [];
+        if (!response.ok) {
+          console.log("Loading inventory from localStorage");
+          const localData = localStorage.getItem('fintrak-inventory-batches');
+          return localData ? JSON.parse(localData) : [];
+        }
         const data = await response.json();
         // Save to localStorage as backup
         localStorage.setItem('fintrak-inventory-batches', JSON.stringify(data));
