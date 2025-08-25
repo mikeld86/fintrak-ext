@@ -61,7 +61,7 @@
 @layer components {
   .dark-input {
     @apply bg-input text-foreground border-border;
-    border-width: 0.5px;
+    border-width: 0.75px;
   }
   .text-muted {
     @apply text-muted-foreground;
