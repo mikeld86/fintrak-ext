@@ -94,6 +94,30 @@ body.dark[data-theme="blue"],
   --primary-foreground: 222.2 84% 4.9%;
 }
 
+body.dark[data-theme="pink"],
+.dark body[data-theme="pink"] {
+  --primary: 343 100% 59%;
+  --primary-foreground: 222.2 84% 4.9%;
+}
+
+body.dark[data-theme="green"],
+.dark body[data-theme="green"] {
+  --primary: 133 73% 63%;
+  --primary-foreground: 222.2 84% 4.9%;
+}
+
+body.dark[data-theme="orange"],
+.dark body[data-theme="orange"] {
+  --primary: 35 100% 50%;
+  --primary-foreground: 222.2 84% 4.9%;
+}
+
+body.dark[data-theme="red"],
+.dark body[data-theme="red"] {
+  --primary: 355 100% 59%;
+  --primary-foreground: 222.2 84% 4.9%;
+}
+
 /* Enhanced contrast for mobile light mode */
 @media (max-width: 768px) {
   :not(.dark) .text-gray-500 {
