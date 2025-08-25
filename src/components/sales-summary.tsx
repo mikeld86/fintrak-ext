@@ -11,7 +11,7 @@ interface SalesSummaryProps {
 
 export function SalesSummary({ summary }: SalesSummaryProps) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 rounded-lg bg-card border-[0.5px] border-primary border-opacity-70">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 rounded-lg bg-card border-[1.25px] border-primary border-opacity-70">
       <div className="text-center">
         <div className="text-sm text-muted-foreground">Total Revenue</div>
         <div className="text-lg font-semibold text-muted-foreground">
