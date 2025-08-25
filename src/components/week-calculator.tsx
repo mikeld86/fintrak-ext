@@ -263,7 +263,7 @@ export function WeekCalculator({
           </div>
           <div className="mt-3 text-right">
             <span className="text-sm text-muted-foreground">Total Income: </span>
-            <span className="text-sm font-semibold text-green-400">
+            <span className="text-sm font-semibold text-success">
               {formatCurrency(totalIncome)}
             </span>
           </div>
@@ -309,7 +309,7 @@ export function WeekCalculator({
           </div>
           <div className="mt-3 text-right">
             <span className="text-sm text-muted-foreground">Total Expenses: </span>
-            <span className="text-sm font-semibold text-red-400">
+            <span className="text-sm font-semibold text-destructive">
               {formatCurrency(totalExpenses)}
             </span>
           </div>

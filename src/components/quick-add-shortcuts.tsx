@@ -60,10 +60,10 @@ export function QuickAddShortcuts({ onAddIncome, onAddExpense, weekNumber }: Qui
               {INCOME_SHORTCUTS.map((shortcut, index) => (
                 <Button
                   key={`${shortcut.label}-${shortcut.amount}-${index}`}
-                  variant="income"
+                  variant="outline"
                   size="sm"
                   onClick={() => onAddIncome(shortcut.label, shortcut.amount)}
-                  className="text-xs h-7 px-2"
+                  className="text-xs h-7 px-2 bg-success/10 text-success border-success/20 hover:bg-success/20"
                 >
                   <Plus className="h-3 w-3 mr-1 flex-shrink-0" />
                   <span className="truncate">
@@ -81,10 +81,10 @@ export function QuickAddShortcuts({ onAddIncome, onAddExpense, weekNumber }: Qui
               {EXPENSE_SHORTCUTS.map((shortcut, index) => (
                 <Button
                   key={`${shortcut.label}-${shortcut.amount}-${index}`}
-                  variant="expense"
+                  variant="outline"
                   size="sm"
                   onClick={() => onAddExpense(shortcut.label, shortcut.amount)}
-                  className="text-xs h-7 px-2"
+                  className="text-xs h-7 px-2 bg-destructive/10 text-destructive border-destructive/20 hover:bg-destructive/20"
                 >
                   <Plus className="h-3 w-3 mr-1 flex-shrink-0" />
                   <span className="truncate">
