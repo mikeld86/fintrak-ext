@@ -3,9 +3,15 @@ import { Button } from "@/components/ui/button";
 import { ThemeSelector } from "@/components/theme-selector";
 import { ExportButtons } from "@/components/export-buttons";
 import { useTheme } from "@/contexts/simple-theme-context";
+
+import blueLogo from "@/assets/Blue.svg";
+import pinkLogo from "@/assets/Pink.svg";
+import yellowLogo from "@/assets/Yellow.svg";
+
 import blueLogo from "../assets/Blue.svg";
 import pinkLogo from "../assets/Pink.svg";
 import yellowLogo from "../assets/Yellow.svg";
+
 import { formatCurrency } from "@/lib/utils";
 import type { FinancialRow } from "@shared/schema";
 
