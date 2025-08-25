@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Plus, Trash2, ShoppingCart, DollarSign, FileText, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { CurrencyInput } from "@/components/ui/currency-input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -289,23 +290,20 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                     <Label htmlFor="totalPrice" className="text-sm text-foreground/85">
                       Total Price
                     </Label>
-                    <Input
+                    <CurrencyInput
                       id="totalPrice"
-                      type="number"
-                      step="0.01"
                       value={formData.totalPrice}
                       onChange={(e) => {
                         const total = e.target.value;
                         const qty = parseInt(formData.qty) || 0;
-                        setFormData(prev => ({ 
-                          ...prev, 
+                        setFormData(prev => ({
+                          ...prev,
                           totalPrice: total,
                           pricePerUnit: qty > 0 && total ? (parseFloat(total) / qty).toString() : "0"
                         }));
                       }}
                       placeholder="0.00"
                       className="bg-input border-primary/30 text-foreground"
-                      required
                     />
                   </div>
                 </div>
@@ -330,15 +328,12 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                     <Label htmlFor="amountPaid" className="text-sm text-foreground/85">
                       Amount Paid
                     </Label>
-                    <Input
+                    <CurrencyInput
                       id="amountPaid"
-                      type="number"
-                      step="0.01"
                       value={formData.amountPaid}
                       onChange={(e) => setFormData(prev => ({ ...prev, amountPaid: e.target.value }))}
                       placeholder="0.00"
                       className="bg-input border-primary/30 text-foreground"
-                      required
                     />
                   </div>
                   <div className="space-y-2">

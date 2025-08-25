@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
+import { CurrencyInput } from "@/components/ui/currency-input";
 import { Button } from "@/components/ui/button";
 import { Building2, Plus, Trash2 } from "lucide-react";
 import { FinancialRow } from "@shared/schema";
@@ -109,18 +110,12 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
                 placeholder="Account name..."
                 className="flex-1 text-base sm:text-sm"
               />
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
-                <Input
-                  type="number"
-                  inputMode="decimal"
-                  value={row.amount || ""}
-                  onChange={(e) => updateBankAccountRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
-                  placeholder="0.00"
-                  className="w-28 sm:w-32 pl-8 text-right text-base sm:text-sm"
-                  step="0.01"
-                />
-              </div>
+              <CurrencyInput
+                value={row.amount || ""}
+                onChange={(e) => updateBankAccountRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
+                placeholder="0.00"
+                className="w-28 sm:w-32 text-base sm:text-sm"
+              />
               <Button
                 variant="ghost"
                 size="sm"
