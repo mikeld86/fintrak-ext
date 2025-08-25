@@ -46,7 +46,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <Card className="w-full max-w-md border border-border">
+      <Card className="w-full max-w-md">
         <CardHeader className="text-center space-y-4">
           <div className="flex justify-center">
             <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
@@ -78,9 +78,11 @@ export default function LoginPage() {
                   id="username"
                   type="text"
                   value={formData.username}
-                  onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData(prev => ({ ...prev, username: e.target.value }))
+                  }
                   placeholder="Enter username"
-                  className="pl-10 bg-input border-border text-foreground"
+                  className="pl-10"
                   required
                 />
               </div>
@@ -96,9 +98,11 @@ export default function LoginPage() {
                   id="password"
                   type="password"
                   value={formData.password}
-                  onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData(prev => ({ ...prev, password: e.target.value }))
+                  }
                   placeholder="Enter password"
-                  className="pl-10 bg-input border-border text-foreground"
+                  className="pl-10"
                   required
                 />
               </div>

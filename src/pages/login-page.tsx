@@ -53,7 +53,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <Card className="border border-border">
+        <Card>
           <CardHeader className="text-center pb-4">
             <div className="flex justify-center mb-4">
               <img
@@ -81,7 +81,6 @@ export default function LoginPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Enter your username"
-                  className="bg-input text-foreground border border-border focus:border-primary hover:border-primary"
                   disabled={loginMutation.isPending}
                 />
               </div>
@@ -97,7 +96,7 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
-                    className="bg-input text-foreground border border-border focus:border-primary hover:border-primary pr-10"
+                    className="pr-10"
                     disabled={loginMutation.isPending}
                   />
                   <Button

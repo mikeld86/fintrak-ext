@@ -12,7 +12,7 @@ interface SalesRecordItemProps {
 
 export function SalesRecordItem({ record, onDelete }: SalesRecordItemProps) {
   return (
-    <div className="p-4 rounded-lg border border-border hover:border-primary transition-colors">
+    <div className="p-4 rounded-lg border-[0.5px] border-primary border-opacity-70 hover:border-primary transition-colors">
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">

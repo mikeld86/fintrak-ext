@@ -117,7 +117,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
 
   if (!selectedBatch) {
     return (
-      <Card className="border border-border">
+      <Card>
         <CardContent className="pt-6">
           <div className="text-center py-8 text-muted-foreground">
             <ShoppingCart className="h-12 w-12 mx-auto mb-3 text-muted-foreground" />
@@ -129,7 +129,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
   }
 
   return (
-    <Card className="border border-border">
+    <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -148,7 +148,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                 Add Sale
               </Button>
             </DialogTrigger>
-            <DialogContent className="bg-background border border-border">
+            <DialogContent className="bg-background">
               <DialogHeader>
                 <DialogTitle className="text-muted-foreground">Record New Sale</DialogTitle>
               </DialogHeader>
@@ -173,7 +173,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                       }}
                       placeholder="0"
                       max={selectedBatch.qtyInStock}
-                      className="bg-input border-border text-foreground"
+                      className="bg-input text-foreground"
                       required
                     />
                     <div className="text-xs text-muted-foreground">
@@ -197,7 +197,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                         }));
                       }}
                       placeholder="0.00"
-                      className="bg-input border-border text-foreground"
+                      className="bg-input text-foreground border-[0.5px] border-primary border-opacity-70"
                     />
                   </div>
                 </div>
@@ -205,7 +205,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                 <div className="grid grid-cols-1 gap-4">
                   <div className="space-y-2">
                     <Label className="text-sm text-muted-foreground">Price Per Unit (Auto-calculated)</Label>
-                    <div className="flex items-center h-10 px-3 rounded-md border border-border bg-muted text-muted-foreground">
+                    <div className="flex items-center h-10 px-3 rounded-md border-[0.5px] border-primary border-opacity-70 bg-muted text-muted-foreground">
                       {formData.qty && formData.totalPrice ? 
                         formatCurrency(parseFloat(formData.totalPrice) / parseInt(formData.qty)) : 
                         formatCurrency(0)
@@ -227,12 +227,12 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                       value={formData.amountPaid}
                       onChange={(e) => setFormData(prev => ({ ...prev, amountPaid: e.target.value }))}
                       placeholder="0.00"
-                      className="bg-input border-border text-foreground"
+                      className="bg-input text-foreground"
                     />
                   </div>
                   <div className="space-y-2">
                     <Label className="text-sm text-muted-foreground">Balance Owing (Auto)</Label>
-                    <div className="flex items-center h-10 px-3 rounded-md border border-border bg-muted text-muted-foreground">
+                    <div className="flex items-center h-10 px-3 rounded-md border-[0.5px] border-primary border-opacity-70 bg-muted text-muted-foreground">
                       {formatCurrency(calculateBalance())}
                     </div>
                   </div>
@@ -247,7 +247,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                     value={formData.notes}
                     onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
                     placeholder="Customer details, payment method, etc."
-                    className="bg-input border-border text-foreground resize-none"
+                    className="bg-input text-foreground border-[0.5px] border-primary border-opacity-70 resize-none"
                     rows={3}
                   />
                 </div>

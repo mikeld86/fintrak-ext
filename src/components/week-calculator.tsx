@@ -202,7 +202,7 @@ export function WeekCalculator({
               type="text"
               value={weekNumber === 1 ? cashOnHand.toFixed(2) : startingBalance.toFixed(2)}
               readOnly
-              className="text-lg font-medium bg-input text-foreground border-border"
+              className="text-lg font-medium bg-input text-foreground border-[0.5px] border-primary border-opacity-70"
             />
           </div>
         </div>
@@ -241,13 +241,13 @@ export function WeekCalculator({
                   value={row.label}
                   onChange={(e) => updateIncomeRow(row.id, 'label', e.target.value)}
                   placeholder="Income source..."
-                  className="flex-1 text-base bg-input text-foreground border-border"
+                  className="flex-1 text-base bg-input text-foreground"
                 />
                 <CurrencyInput
                   value={row.amount || ""}
                   onChange={(e) => updateIncomeRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
                   placeholder="0.00"
-                  className="w-28 sm:w-32 text-base bg-input text-foreground border-border"
+                  className="w-28 sm:w-32 text-base bg-input text-foreground border-[0.5px] border-primary border-opacity-70"
                 />
                 <Button
                   variant="destructive"
@@ -287,13 +287,13 @@ export function WeekCalculator({
                   value={row.label}
                   onChange={(e) => updateExpenseRow(row.id, 'label', e.target.value)}
                   placeholder="Expense item..."
-                  className="flex-1 text-base bg-input text-foreground border-border"
+                  className="flex-1 text-base bg-input text-foreground"
                 />
                 <CurrencyInput
                   value={row.amount || ""}
                   onChange={(e) => updateExpenseRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
                   placeholder="0.00"
-                  className="w-28 sm:w-32 text-base bg-input text-foreground border-border"
+                  className="w-28 sm:w-32 text-base bg-input text-foreground border-[0.5px] border-primary border-opacity-70"
                 />
                 <Button
                   variant="destructive"
@@ -315,7 +315,7 @@ export function WeekCalculator({
         </div>
 
         {/* Balance */}
-        <div className="border-t border-primary pt-6">
+        <div className="border-t-[0.5px] border-primary/70 pt-6">
           <div className="text-center">
             <div className="text-sm text-muted-foreground mb-2">
               Week {weekNumber} Balance
