@@ -57,15 +57,15 @@
 }
 
 /* Override input styling for dark theme */
-.dark-input {
-  @apply bg-input text-foreground border-primary border-opacity-70;
-  border-width: 0.5px;
-}
+@layer components {
+  .dark-input {
+    @apply bg-input text-foreground border-primary border-opacity-70;
+    border-width: 0.5px;
+  }
 
-
-/* Ensure proper text contrast */
-.text-muted {
-  @apply text-muted-foreground;
+  .text-muted {
+    @apply text-muted-foreground;
+  }
 }
 
 /* Theme color variations - iOS color palette */
