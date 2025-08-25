@@ -3,11 +3,16 @@ import fs from "fs";
 import path from "path";
 
 describe("dark mode variables", () => {
-  it("includes ring color in the dark theme block", () => {
+  it("pulls ring color from the base scope", () => {
     const cssPath = path.resolve(__dirname, "../index.css");
     const css = fs.readFileSync(cssPath, "utf8");
-    const match = /\.dark\s*\{([^}]+)\}/.exec(css);
-    expect(match).not.toBeNull();
-    expect(match![1]).toContain("--ring: 212.7 26.8% 83.9%;");
+
+    const rootMatch = /:root\s*\{([^}]+)\}/.exec(css);
+    expect(rootMatch).not.toBeNull();
+    expect(rootMatch![1]).toContain("--ring: var(--primary);");
+
+    const darkMatch = /\.dark\s*\{([^}]+)\}/.exec(css);
+    expect(darkMatch).not.toBeNull();
+    expect(darkMatch![1]).not.toContain("--ring");
   });
 });
