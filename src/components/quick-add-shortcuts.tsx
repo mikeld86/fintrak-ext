@@ -36,9 +36,10 @@ export function QuickAddShortcuts({ onAddIncome, onAddExpense, weekNumber }: Qui
   return (
     <div className="bg-primary/5 dark:bg-primary/10 rounded-lg border border-primary/20 dark:border-primary/30">
       {/* Collapsible Header */}
-      <button
+      <Button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between p-3 text-left hover:bg-primary/10 dark:hover:bg-primary/20 rounded-lg transition-colors touch-manipulation [-webkit-tap-highlight-color:transparent]"
+        variant="ghost"
+        className="w-full flex items-center justify-between p-3 touch-manipulation"
       >
         <h3 className="text-sm font-medium text-primary dark:text-primary">
           Quick Add - Week {weekNumber}
@@ -48,7 +49,7 @@ export function QuickAddShortcuts({ onAddIncome, onAddExpense, weekNumber }: Qui
         ) : (
           <ChevronDown className="h-4 w-4 text-primary" />
         )}
-      </button>
+      </Button>
 
       {/* Collapsible Content */}
       {isExpanded && (
@@ -63,7 +64,7 @@ export function QuickAddShortcuts({ onAddIncome, onAddExpense, weekNumber }: Qui
                   variant="income"
                   size="sm"
                   onClick={() => onAddIncome(shortcut.label, shortcut.amount)}
-                  className="text-xs h-7 px-2"
+                  className="h-7 px-2"
                 >
                   <Plus className="h-3 w-3 mr-1 flex-shrink-0" />
                   <span className="truncate">
@@ -84,7 +85,7 @@ export function QuickAddShortcuts({ onAddIncome, onAddExpense, weekNumber }: Qui
                   variant="expense"
                   size="sm"
                   onClick={() => onAddExpense(shortcut.label, shortcut.amount)}
-                  className="text-xs h-7 px-2"
+                  className="h-7 px-2"
                 >
                   <Plus className="h-3 w-3 mr-1 flex-shrink-0" />
                   <span className="truncate">

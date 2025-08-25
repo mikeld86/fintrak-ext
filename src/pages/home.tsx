@@ -390,7 +390,6 @@ export default function Home() {
                 variant="outline"
                 size="sm"
                 onClick={() => window.location.href = "/inventory"}
-                className="border-primary/30 hover:bg-primary/10"
               >
                 <Package className="h-4 w-4 mr-1" />
                 Inventory
@@ -407,20 +406,18 @@ export default function Home() {
                 week2Balance: week1Balance + week2IncomeRows.reduce((sum, row) => sum + row.amount, 0) - week2ExpenseRows.reduce((sum, row) => sum + row.amount, 0),
                 totalBankBalance: bankAccountRows.reduce((sum, row) => sum + row.amount, 0)
               }} />
-              <Button 
-                variant="ghost"
+              <Button
+                variant="destructive"
                 size="sm"
                 onClick={() => setShowClearDialog(true)}
-                className="text-destructive hover:text-destructive/80"
               >
                 <Trash2 className="h-4 w-4 mr-2" />
                 Clear All
               </Button>
-              <Button 
+              <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => window.location.href = '/login'}
-                className="text-muted-foreground hover:text-foreground"
               >
                 Sign Out
               </Button>
@@ -432,7 +429,6 @@ export default function Home() {
                 variant="outline"
                 size="sm"
                 onClick={() => window.location.href = "/inventory"}
-                className="border-primary/30 hover:bg-primary/10"
               >
                 <Package className="h-4 w-4" />
               </Button>
@@ -447,19 +443,19 @@ export default function Home() {
                 week2Balance: week1Balance + week2IncomeRows.reduce((sum, row) => sum + row.amount, 0) - week2ExpenseRows.reduce((sum, row) => sum + row.amount, 0),
                 totalBankBalance: bankAccountRows.reduce((sum, row) => sum + row.amount, 0)
               }} />
-              <Button 
-                variant="ghost"
+              <Button
+                variant="destructive"
                 size="sm"
                 onClick={() => setShowClearDialog(true)}
-                className="text-destructive hover:text-destructive/80 px-2"
+                className="px-2"
               >
                 <Trash2 className="h-4 w-4" />
               </Button>
-              <Button 
+              <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => window.location.href = '/login'}
-                className="text-muted-foreground hover:text-foreground px-2"
+                className="px-2"
               >
                 Sign Out
               </Button>
@@ -564,10 +560,10 @@ export default function Home() {
           
           {/* Add Week Button */}
           <div className="lg:col-span-2 flex justify-center">
-            <Button 
+            <Button
               onClick={addAdditionalWeek}
               variant="outline"
-              className="w-full max-w-md border-dashed border-2 border-primary/30 hover:border-primary/50 text-primary hover:text-primary/80"
+              className="w-full max-w-md"
             >
               + Add Week {3 + additionalWeeks.length}
             </Button>
