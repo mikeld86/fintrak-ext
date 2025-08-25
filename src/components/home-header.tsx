@@ -115,7 +115,7 @@ export function HomeHeader({
         </div>
 
         {/* Summary Bar */}
-        <div className="border-t border-primary py-3">
+        <div className="border-t-[0.5px] border-primary/70 py-3">
           <div className="grid grid-cols-2 sm:flex sm:justify-center gap-2 sm:gap-6 text-xs sm:text-sm">
             <div className="flex items-center justify-center sm:justify-start">
               <span className="text-muted-foreground mr-1 sm:mr-2">Cash:</span>

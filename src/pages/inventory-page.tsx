@@ -61,7 +61,7 @@ export default function InventoryPage() {
         <div className="space-y-6">
           {/* Overview Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card className="border border-border bg-card">
+            <Card>
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <Package className="h-5 w-5 text-primary" />
@@ -73,7 +73,7 @@ export default function InventoryPage() {
               </CardContent>
             </Card>
 
-            <Card className="border border-border bg-card">
+            <Card>
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <TrendingUp className="h-5 w-5 text-primary" />
@@ -85,7 +85,7 @@ export default function InventoryPage() {
               </CardContent>
             </Card>
 
-            <Card className="border border-border bg-card">
+            <Card>
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <Calculator className="h-5 w-5 text-primary" />
@@ -115,7 +115,7 @@ export default function InventoryPage() {
           </div>
 
           {/* Instructions */}
-          <Card className="border border-border bg-card">
+          <Card>
             <CardHeader>
               <CardTitle className="text-muted-foreground text-base">How to Use</CardTitle>
             </CardHeader>

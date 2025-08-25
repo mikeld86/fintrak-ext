@@ -90,7 +90,10 @@ export default function Home() {
           {/* Cash Calculator in Card Container */}
           <div className="lg:col-span-2">
             <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="cash-calculator" className="border border-border rounded-lg bg-card">
+              <AccordionItem
+                value="cash-calculator"
+                className="border-[0.5px] border-primary border-opacity-70 rounded-lg bg-card"
+              >
                 <AccordionTrigger className="text-base font-medium px-6 py-4 hover:no-underline [&[data-state=open]>svg]:rotate-180">
                   <div className="flex items-center justify-between w-full mr-4">
                     <div className="flex items-center">

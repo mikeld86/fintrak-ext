@@ -37,7 +37,10 @@ export function ExportButtons({ data }: ExportButtonsProps) {
           <span className="hidden sm:inline">Export</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="bg-background border border-border shadow-lg">
+      <DropdownMenuContent
+        align="end"
+        className="bg-background border-[0.5px] border-primary border-opacity-70 shadow-lg"
+      >
         <DropdownMenuItem onClick={handleExcelExport} className="text-foreground hover:bg-accent hover:text-accent-foreground">
           <FileSpreadsheet className="h-4 w-4 mr-2 text-green-600" />
           Export to Excel (.xlsx)
