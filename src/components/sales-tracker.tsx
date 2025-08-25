@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Plus, Trash2, ShoppingCart, DollarSign, FileText, Calendar } from "lucide-react";
+import { useState } from "react";
+import { Plus, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CurrencyInput } from "@/components/ui/currency-input";
@@ -8,18 +7,17 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { apiRequest } from "@/lib/queryClient";
 import { formatCurrency } from "@/lib/utils";
-import type { SalesRecord, InsertSalesRecord, InventoryBatch } from "@shared/schema";
+import { useSalesRecords } from "@/hooks/use-sales-records";
+import { SalesSummary } from "./sales-summary";
+import { SalesRecordItem } from "./sales-record-item";
+import type { InsertSalesRecord, InventoryBatch, SalesRecord } from "@shared/schema";
 
 interface SalesTrackerProps {
   selectedBatch?: InventoryBatch;
 }
 
 export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
-  const queryClient = useQueryClient();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [formData, setFormData] = useState({
     qty: "",
@@ -28,116 +26,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
     amountPaid: "",
     notes: "",
   });
-
-  // Fetch sales records with localStorage fallback
-  const { data: salesRecords = [], isLoading } = useQuery({
-    queryKey: ["/api/sales-records", selectedBatch?.id],
-    retry: false,
-    enabled: !!selectedBatch,
-    queryFn: async () => {
-      if (!selectedBatch) return [];
-      
-      try {
-        const response = await fetch(`/api/sales-records?batchId=${selectedBatch.id}`, {
-          credentials: "include",
-        });
-        if (response.status === 401) {
-          // Load from localStorage when server unavailable
-          const localData = localStorage.getItem(`fintrak-sales-records-${selectedBatch.id}`);
-          return localData ? JSON.parse(localData) : [];
-        }
-        if (!response.ok) return [];
-        const data = await response.json();
-        // Save to localStorage as backup
-        localStorage.setItem(`fintrak-sales-records-${selectedBatch.id}`, JSON.stringify(data));
-        return data;
-      } catch (error) {
-        console.log("Loading sales records from localStorage");
-        const localData = localStorage.getItem(`fintrak-sales-records-${selectedBatch.id}`);
-        return localData ? JSON.parse(localData) : [];
-      }
-    },
-  });
-
-  // Add sales record mutation
-  const addSaleMutation = useMutation({
-    mutationFn: async (saleData: InsertSalesRecord) => {
-      try {
-        const response = await apiRequest("POST", "/api/sales-records", saleData);
-        return await response.json();
-      } catch (error) {
-        // Offline mode - save to localStorage
-        const localKey = `fintrak-sales-records-${saleData.batchId}`;
-        const localData = JSON.parse(localStorage.getItem(localKey) || '[]');
-        const newSale = {
-          ...saleData,
-          id: `sale_${Date.now()}`,
-          userId: "46429020",
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        };
-        
-        localData.push(newSale);
-        localStorage.setItem(localKey, JSON.stringify(localData));
-        
-        // Update batch quantities and actual sale cost in localStorage
-        const batchData = JSON.parse(localStorage.getItem('fintrak-inventory-batches') || '[]');
-        const batchIndex = batchData.findIndex((b: any) => b.id === saleData.batchId);
-        if (batchIndex >= 0) {
-          batchData[batchIndex].qtySold = (batchData[batchIndex].qtySold || 0) + saleData.qty;
-          batchData[batchIndex].qtyInStock = Math.max(0, batchData[batchIndex].qtyInStock - saleData.qty);
-          
-          // Calculate actual sale cost per unit based on all sales
-          const allSales = [...localData, newSale];
-          const totalRevenue = allSales.reduce((sum: number, sale: any) => sum + parseFloat(sale.totalPrice), 0);
-          const totalQtySold = allSales.reduce((sum: number, sale: any) => sum + sale.qty, 0);
-          batchData[batchIndex].actualSaleCostPerUnit = totalQtySold > 0 ? (totalRevenue / totalQtySold).toString() : "0";
-          
-          localStorage.setItem('fintrak-inventory-batches', JSON.stringify(batchData));
-        }
-        
-        return newSale;
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/sales-records"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/inventory-batches"] });
-      setIsAddDialogOpen(false);
-      resetForm();
-    },
-  });
-
-  // Delete sales record mutation
-  const deleteSaleMutation = useMutation({
-    mutationFn: async (saleId: string) => {
-      try {
-        await apiRequest("DELETE", `/api/sales-records/${saleId}`);
-      } catch (error) {
-        // Offline mode - remove from localStorage
-        if (!selectedBatch) return;
-        const localKey = `fintrak-sales-records-${selectedBatch.id}`;
-        const localData = JSON.parse(localStorage.getItem(localKey) || '[]');
-        const saleToDelete = localData.find((s: any) => s.id === saleId);
-        const filtered = localData.filter((s: any) => s.id !== saleId);
-        localStorage.setItem(localKey, JSON.stringify(filtered));
-        
-        // Update batch quantities
-        if (saleToDelete) {
-          const batchData = JSON.parse(localStorage.getItem('fintrak-inventory-batches') || '[]');
-          const batchIndex = batchData.findIndex((b: any) => b.id === selectedBatch.id);
-          if (batchIndex >= 0) {
-            batchData[batchIndex].qtySold = Math.max(0, (batchData[batchIndex].qtySold || 0) - saleToDelete.qty);
-            batchData[batchIndex].qtyInStock = batchData[batchIndex].qtyInStock + saleToDelete.qty;
-            localStorage.setItem('fintrak-inventory-batches', JSON.stringify(batchData));
-          }
-        }
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/sales-records"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/inventory-batches"] });
-    },
-  });
+  const { salesRecords, isLoading, addSaleMutation, deleteSaleMutation } = useSalesRecords(selectedBatch);
 
   const resetForm = () => {
     setFormData({
@@ -176,7 +65,12 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
       userId: "46429020",
     };
 
-    addSaleMutation.mutate(saleData);
+    addSaleMutation.mutate(saleData, {
+      onSuccess: () => {
+        setIsAddDialogOpen(false);
+        resetForm();
+      },
+    });
   };
 
   const calculateBalance = () => {
@@ -380,32 +274,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
       </CardHeader>
       <CardContent>
         {/* Sales Summary */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 rounded-lg bg-primary/5 border border-primary/20">
-          <div className="text-center">
-            <div className="text-sm text-muted-foreground">Total Revenue</div>
-            <div className="text-lg font-semibold text-muted-foreground">
-              {formatCurrency(summary.totalRevenue)}
-            </div>
-          </div>
-          <div className="text-center">
-            <div className="text-sm text-muted-foreground">Units Sold</div>
-            <div className="text-lg font-semibold text-muted-foreground">
-              {summary.totalSold}
-            </div>
-          </div>
-          <div className="text-center">
-            <div className="text-sm text-muted-foreground">Profit</div>
-            <div className={`text-lg font-semibold ${summary.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {formatCurrency(summary.profit)}
-            </div>
-          </div>
-          <div className="text-center">
-            <div className="text-sm text-muted-foreground">Margin</div>
-            <div className={`text-lg font-semibold ${summary.profitMargin >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {summary.profitMargin.toFixed(1)}%
-            </div>
-          </div>
-        </div>
+        <SalesSummary summary={summary} />
 
         {/* Sales Records */}
         {isLoading ? (
@@ -417,73 +286,15 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
         ) : (
           <div className="space-y-3">
             {salesRecords.map((record: SalesRecord) => (
-              <div
+              <SalesRecordItem
                 key={record.id}
-                className="p-4 rounded-lg border-2 border-primary/20 hover:border-primary/40 transition-colors"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Badge variant="secondary" className="text-xs">
-                        {record.qty} units
-                      </Badge>
-                      <span className="text-xs text-muted-foreground">
-                        {new Date(record.createdAt!).toLocaleDateString()}
-                      </span>
-                    </div>
-                    
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                      <div>
-                        <span className="text-muted-foreground">Total Price:</span>
-                        <div className="font-medium text-muted-foreground">
-                          {formatCurrency(parseFloat(record.totalPrice))}
-                        </div>
-                      </div>
-                      <div>
-                        <span className="text-muted-foreground">Amount Paid:</span>
-                        <div className="font-medium text-muted-foreground">
-                          {formatCurrency(parseFloat(record.amountPaid))}
-                        </div>
-                      </div>
-                      <div>
-                        <span className="text-muted-foreground">Balance Owing:</span>
-                        <div className={`font-medium ${parseFloat(record.balanceOwing) > 0 ? 'text-red-600' : 'text-green-600'}`}>
-                          {formatCurrency(parseFloat(record.balanceOwing))}
-                        </div>
-                      </div>
-                      <div>
-                        <span className="text-muted-foreground">Unit Price:</span>
-                        <div className="font-medium text-muted-foreground">
-                          {formatCurrency(parseFloat(record.totalPrice) / record.qty)}
-                        </div>
-                      </div>
-                    </div>
-
-                    {record.notes && (
-                      <>
-                        <Separator className="my-3" />
-                        <div className="flex items-start gap-2 text-sm">
-                          <FileText className="h-4 w-4 text-muted-foreground mt-0.5" />
-                          <span className="text-muted-foreground">{record.notes}</span>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                  
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => {
-                      if (confirm("Delete this sales record?")) {
-                        deleteSaleMutation.mutate(record.id);
-                      }
-                    }}
-                    className="h-8 px-2 ml-4"
-                  >
-                    <Trash2 className="h-3 w-3" />
-                  </Button>
-                </div>
-              </div>
+                record={record}
+                onDelete={() => {
+                  if (confirm("Delete this sales record?")) {
+                    deleteSaleMutation.mutate(record.id);
+                  }
+                }}
+              />
             ))}
           </div>
         )}
