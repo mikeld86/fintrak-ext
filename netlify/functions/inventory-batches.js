@@ -100,6 +100,35 @@ exports.handler = async (event, context) => {
       };
     }
 
+    if (httpMethod === 'DELETE') {
+      const pathParts = event.path.split('/');
+      const batchId = pathParts[pathParts.length - 1];
+
+      const { data, error } = await supabase
+        .from('inventory_batches')
+        .delete()
+        .eq('id', batchId)
+        .eq('user_id', userId)
+        .select()
+        .single();
+
+      if (error && error.code === 'PGRST116') {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ error: 'Batch not found' })
+        };
+      }
+
+      if (error) throw error;
+
+      return {
+        statusCode: 204,
+        headers,
+        body: ''
+      };
+    }
+
     return {
       statusCode: 405,
       headers,
