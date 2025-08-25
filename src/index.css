@@ -70,28 +70,28 @@
 
 /* Theme color variations - iOS color palette */
 body[data-theme="blue"] {
-  --primary: hsl(211 100% 50%); /* #007AFF */
-  --primary-foreground: hsl(0 0% 100%);
+  --primary: 211 100% 50%; /* #007AFF */
+  --primary-foreground: 0 0% 100%;
 }
 
 body[data-theme="pink"] {
-  --primary: hsl(343 100% 59%); /* #FF2D55 */
-  --primary-foreground: hsl(0 0% 100%);
+  --primary: 343 100% 59%; /* #FF2D55 */
+  --primary-foreground: 0 0% 100%;
 }
 
 body[data-theme="green"] {
-  --primary: hsl(133 73% 63%); /* #4CD964 */
-  --primary-foreground: hsl(0 0% 0%);
+  --primary: 133 73% 63%; /* #4CD964 */
+  --primary-foreground: 0 0% 0%;
 }
 
 body[data-theme="orange"] {
-  --primary: hsl(35 100% 50%); /* #FF9500 */
-  --primary-foreground: hsl(0 0% 0%);
+  --primary: 35 100% 50%; /* #FF9500 */
+  --primary-foreground: 0 0% 0%;
 }
 
 body[data-theme="red"] {
-  --primary: hsl(355 100% 59%); /* #FF3B30 */
-  --primary-foreground: hsl(0 0% 100%);
+  --primary: 355 100% 59%; /* #FF3B30 */
+  --primary-foreground: 0 0% 100%;
 }
 body.dark[data-theme="blue"],
 .dark body[data-theme="blue"] {
@@ -126,31 +126,31 @@ body.dark[data-theme="red"],
 /* Enhanced contrast for mobile light mode */
 @media (max-width: 768px) {
   :not(.dark) .text-gray-500 {
-    color: hsl(210 25% 40%);
+    color: hsl(210, 25%, 40%);
   }
 
   :not(.dark) .text-gray-600 {
-    color: hsl(210 25% 30%);
+    color: hsl(210, 25%, 30%);
   }
 
   :not(.dark) .text-gray-700 {
-    color: hsl(210 25% 20%);
+    color: hsl(210, 25%, 20%);
   }
 
   :not(.dark) .border-gray-200 {
-    border-color: hsl(210 25% 75%);
+    border-color: hsl(210, 25%, 75%);
   }
 
   :not(.dark) .border-gray-300 {
-    border-color: hsl(210 25% 65%);
+    border-color: hsl(210, 25%, 65%);
   }
 
   :not(.dark) .bg-gray-50 {
-    background-color: hsl(210 25% 96%);
+    background-color: hsl(210, 25%, 96%);
   }
 
   :not(.dark) .bg-gray-100 {
-    background-color: hsl(210 25% 90%);
+    background-color: hsl(210, 25%, 90%);
   }
 }
 

@@ -64,7 +64,8 @@ export default {
       },
       fontFamily: {
         sans: ["Space Grotesk", "var(--font-sans)", "sans-serif"],
->>>>>>> main
+        
+        main
         serif: ["var(--font-serif)", "Georgia", "serif"],
         mono: ["var(--font-mono)", "Menlo", "monospace"],
       },
