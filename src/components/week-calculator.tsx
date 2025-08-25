@@ -242,13 +242,13 @@ export function WeekCalculator({
                   value={row.label}
                   onChange={(e) => updateIncomeRow(row.id, 'label', e.target.value)}
                   placeholder="Income source..."
-                  className="flex-1 text-base sm:text-sm bg-input text-foreground border-border"
+                  className="flex-1 text-base bg-input text-foreground border-border"
                 />
                 <CurrencyInput
                   value={row.amount || ""}
                   onChange={(e) => updateIncomeRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
                   placeholder="0.00"
-                  className="w-28 sm:w-32 text-base sm:text-sm bg-input text-foreground border-border"
+                  className="w-28 sm:w-32 text-base bg-input text-foreground border-border"
                 />
                 <Button
                   variant="ghost"
@@ -288,13 +288,13 @@ export function WeekCalculator({
                   value={row.label}
                   onChange={(e) => updateExpenseRow(row.id, 'label', e.target.value)}
                   placeholder="Expense item..."
-                  className="flex-1 text-base sm:text-sm bg-input text-foreground border-border"
+                  className="flex-1 text-base bg-input text-foreground border-border"
                 />
                 <CurrencyInput
                   value={row.amount || ""}
                   onChange={(e) => updateExpenseRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
                   placeholder="0.00"
-                  className="w-28 sm:w-32 text-base sm:text-sm bg-input text-foreground border-border"
+                  className="w-28 sm:w-32 text-base bg-input text-foreground border-border"
                 />
                 <Button
                   variant="ghost"
