@@ -117,10 +117,10 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
                 className="w-28 sm:w-32 text-base"
               />
               <Button
-                variant="ghost"
+                variant="destructive"
                 size="sm"
                 onClick={() => removeBankAccountRow(row.id)}
-                className="text-destructive hover:text-destructive/80 p-2"
+                className="p-2"
               >
                 <Trash2 className="h-4 w-4" />
               </Button>
