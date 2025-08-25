@@ -359,11 +359,10 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                 </div>
 
                 <div className="flex justify-end gap-2 pt-4">
-                  <Button 
-                    type="button" 
-                    variant="outline" 
+                  <Button
+                    type="button"
+                    variant="outline"
                     onClick={() => setIsAddDialogOpen(false)}
-                    className="border-primary/30"
                   >
                     Cancel
                   </Button>

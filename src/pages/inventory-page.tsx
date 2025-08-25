@@ -27,7 +27,6 @@ export default function InventoryPage() {
                 variant="outline"
                 size="sm"
                 onClick={() => setLocation("/")}
-                className="border-primary/30"
               >
                 <ArrowLeft className="h-4 w-4 mr-1" />
                 Back to Financial Calculator

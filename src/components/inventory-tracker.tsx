@@ -312,11 +312,10 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                 </div>
 
                 <div className="flex justify-end gap-2 pt-4">
-                  <Button 
-                    type="button" 
-                    variant="outline" 
+                  <Button
+                    type="button"
+                    variant="outline"
                     onClick={() => setIsAddDialogOpen(false)}
-                    className="border-primary/30"
                   >
                     Cancel
                   </Button>
@@ -443,20 +442,20 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                           e.stopPropagation();
                           handleEdit(batch);
                         }}
-                        className="border-primary/30 h-8 px-2"
+                        className="h-8 px-2"
                       >
                         <Edit2 className="h-3 w-3" />
                       </Button>
                       <Button
                         size="sm"
-                        variant="outline"
+                        variant="destructive"
                         onClick={(e) => {
                           e.stopPropagation();
                           if (confirm("Delete this batch?")) {
                             deleteBatchMutation.mutate(batch.id);
                           }
                         }}
-                        className="border-red-300 text-red-600 hover:bg-red-50 h-8 px-2"
+                        className="h-8 px-2"
                       >
                         <Trash2 className="h-3 w-3" />
                       </Button>
