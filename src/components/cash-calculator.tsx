@@ -76,7 +76,7 @@ export function CashCalculator({ denominations, onUpdate }: CashCalculatorProps)
             return (
               <div
                 key={note.key}
-                className="flex items-center justify-between p-3 bg-card rounded-lg border-[0.5px] border-primary border-opacity-70"
+                className="flex items-center justify-between p-3 bg-card rounded-lg border-[1.25px] border-primary border-opacity-70"
               >
                 <span className="text-sm font-medium text-card-foreground min-w-0 flex-1">
                   {note.label}
@@ -100,7 +100,7 @@ export function CashCalculator({ denominations, onUpdate }: CashCalculatorProps)
               </div>
             );
           })}
-          <div className="border-t-[0.5px] border-primary/70 pt-3">
+          <div className="border-t-[1.25px] border-primary/70 pt-3">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium text-muted-foreground">
                 Notes Total:
@@ -126,7 +126,7 @@ export function CashCalculator({ denominations, onUpdate }: CashCalculatorProps)
             return (
               <div
                 key={coin.key}
-                className="flex items-center justify-between p-3 bg-card rounded-lg border-[0.5px] border-primary border-opacity-70"
+                className="flex items-center justify-between p-3 bg-card rounded-lg border-[1.25px] border-primary border-opacity-70"
               >
                 <span className="text-sm font-medium text-card-foreground min-w-0 flex-1">
                   {coin.label}
@@ -151,7 +151,7 @@ export function CashCalculator({ denominations, onUpdate }: CashCalculatorProps)
               </div>
             );
           })}
-          <div className="border-t-[0.5px] border-primary/70 pt-3">
+          <div className="border-t-[1.25px] border-primary/70 pt-3">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium text-muted-foreground">
                 Coins Total:
@@ -165,7 +165,7 @@ export function CashCalculator({ denominations, onUpdate }: CashCalculatorProps)
       </div>
 
       {/* Overall Total */}
-      <div className="md:col-span-2 border-t-[0.5px] border-primary/70 pt-4">
+      <div className="md:col-span-2 border-t-[1.25px] border-primary/70 pt-4">
         <div className="flex justify-between items-center">
           <span className="text-lg font-medium text-muted-foreground">
             Total Cash on Hand:
