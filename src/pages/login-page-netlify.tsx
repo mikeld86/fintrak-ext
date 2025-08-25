@@ -49,8 +49,8 @@ export default function LoginPage() {
       <Card className="w-full max-w-md border-2 border-primary/20">
         <CardHeader className="text-center space-y-4">
           <div className="flex justify-center">
-            <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">F</span>
+            <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-lg">F</span>
             </div>
           </div>
           <CardTitle className="text-2xl text-muted-foreground">

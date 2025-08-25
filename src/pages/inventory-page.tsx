@@ -72,9 +72,9 @@ export default function InventoryPage() {
             <Card className="border-2 border-primary/20">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-green-100 dark:bg-green-900/30">
-                    <TrendingUp className="h-5 w-5 text-green-600" />
-                  </div>
+                <div className="p-2 rounded-lg bg-success/10 dark:bg-success/30">
+                  <TrendingUp className="h-5 w-5 text-success" />
+                </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Sales Tracking</p>
                     <p className="text-lg font-semibold text-muted-foreground">Record Sales</p>
@@ -86,9 +86,9 @@ export default function InventoryPage() {
             <Card className="border-2 border-primary/20">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30">
-                    <TrendingUp className="h-5 w-5 text-blue-600" />
-                  </div>
+                <div className="p-2 rounded-lg bg-info/10 dark:bg-info/30">
+                  <TrendingUp className="h-5 w-5 text-info" />
+                </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Profit Analysis</p>
                     <p className="text-lg font-semibold text-muted-foreground">Break-even</p>
