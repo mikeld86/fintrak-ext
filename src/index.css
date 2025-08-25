@@ -81,7 +81,7 @@ body[data-theme="pink"] {
 
 body[data-theme="green"] {
   --primary: 133 73% 63%; /* #4CD964 */
-  --primary-foreground: 0 0% 0%;
+  --primary-foreground: 0 0% 0%; /* for hsl() */
 }
 
 body[data-theme="orange"] {
