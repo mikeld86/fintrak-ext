@@ -21,6 +21,23 @@ exports.handler = async (event, context) => {
     const { httpMethod } = event;
     const userId = "46429020";
 
+    // Helper to convert database fields (snake_case) to camelCase
+    const toCamelCase = (batch) => ({
+      id: batch.id,
+      userId: batch.user_id,
+      batchName: batch.batch_name,
+      productName: batch.product_name,
+      totalPricePaid: batch.total_price_paid,
+      numberOfUnits: batch.number_of_units,
+      unitCost: batch.unit_cost,
+      projectedSaleCostPerUnit: batch.projected_sale_cost_per_unit,
+      actualSaleCostPerUnit: batch.actual_sale_cost_per_unit,
+      qtyInStock: batch.qty_in_stock,
+      qtySold: batch.qty_sold,
+      createdAt: batch.created_at,
+      updatedAt: batch.updated_at,
+    });
+
     if (httpMethod === 'GET') {
       const { data, error } = await supabase
         .from('inventory_batches')
@@ -30,10 +47,12 @@ exports.handler = async (event, context) => {
 
       if (error) throw error;
 
+      const camelData = (data || []).map(toCamelCase);
+
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify(data || [])
+        body: JSON.stringify(camelData)
       };
     }
 
@@ -45,11 +64,13 @@ exports.handler = async (event, context) => {
         user_id: userId,
         batch_name: requestData.batchName,
         product_name: requestData.productName,
+        total_price_paid: requestData.totalPricePaid || '0',
+        number_of_units: requestData.numberOfUnits || 0,
+        unit_cost: requestData.unitCost || '0',
+        projected_sale_cost_per_unit: requestData.projectedSaleCostPerUnit || '0',
+        actual_sale_cost_per_unit: requestData.actualSaleCostPerUnit || '0',
         qty_in_stock: requestData.qtyInStock || 0,
         qty_sold: requestData.qtySold || 0,
-        cost_per_unit: requestData.unitCost || '0',
-        projected_sale_cost_per_unit: requestData.projectedSaleCostPerUnit || '0',
-        actual_sale_cost_per_unit: requestData.actualSaleCostPerUnit || '0'
       };
       
       const { data, error } = await supabase
@@ -63,7 +84,7 @@ exports.handler = async (event, context) => {
       return {
         statusCode: 201,
         headers,
-        body: JSON.stringify(data)
+        body: JSON.stringify(toCamelCase(data))
       };
     }
 
@@ -76,11 +97,13 @@ exports.handler = async (event, context) => {
       const dbData = {
         batch_name: requestData.batchName,
         product_name: requestData.productName,
+        total_price_paid: requestData.totalPricePaid || '0',
+        number_of_units: requestData.numberOfUnits || 0,
+        unit_cost: requestData.unitCost || '0',
+        projected_sale_cost_per_unit: requestData.projectedSaleCostPerUnit || '0',
+        actual_sale_cost_per_unit: requestData.actualSaleCostPerUnit || '0',
         qty_in_stock: requestData.qtyInStock || 0,
         qty_sold: requestData.qtySold || 0,
-        cost_per_unit: requestData.unitCost || '0',
-        projected_sale_cost_per_unit: requestData.projectedSaleCostPerUnit || '0',
-        actual_sale_cost_per_unit: requestData.actualSaleCostPerUnit || '0'
       };
       
       const { data, error } = await supabase
@@ -96,7 +119,7 @@ exports.handler = async (event, context) => {
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify(data)
+        body: JSON.stringify(toCamelCase(data))
       };
     }
 
