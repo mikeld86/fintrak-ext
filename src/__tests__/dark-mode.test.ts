@@ -8,6 +8,6 @@ describe("dark mode variables", () => {
     const css = fs.readFileSync(cssPath, "utf8");
     const match = /\.dark\s*\{([^}]+)\}/.exec(css);
     expect(match).not.toBeNull();
-    expect(match![1]).toContain("--ring: 212.7 26.8% 83.9%;");
+    expect(match![1]).toContain("--ring: var(--primary);");
   });
 });
