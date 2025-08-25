@@ -136,6 +136,7 @@ export function CashCalculator({ denominations, onUpdate }: CashCalculatorProps)
                     type="number"
                     inputMode="numeric"
                     value={quantity || ""}
+
                     onChange={(e) =>
                       updateDenomination(coin.key, parseInt(e.target.value) || 0)
                     }

@@ -58,13 +58,11 @@
   }
 }
 
-/* Override input styling for dark theme */
 @layer components {
   .dark-input {
-    @apply bg-input text-foreground border-primary border-opacity-70;
-    border-width: 0.5px;
+    @apply bg-input text-foreground border-border;
+    border-width: 0.75px;
   }
-
   .text-muted {
     @apply text-muted-foreground;
   }

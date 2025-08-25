@@ -47,7 +47,21 @@ exports.handler = async (event, context) => {
 
       if (error) throw error;
 
-      const camelData = (data || []).map(toCamelCase);
+      const camelData = (data || []).map((row) => ({
+        id: row.id,
+        userId: row.user_id,
+        batchName: row.batch_name,
+        productName: row.product_name,
+        totalPricePaid: row.total_price_paid,
+        numberOfUnits: row.number_of_units,
+        unitCost: row.unit_cost,
+        projectedSaleCostPerUnit: row.projected_sale_cost_per_unit,
+        actualSaleCostPerUnit: row.actual_sale_cost_per_unit,
+        qtyInStock: row.qty_in_stock,
+        qtySold: row.qty_sold,
+        createdAt: row.created_at,
+        updatedAt: row.updated_at,
+      }));
 
       return {
         statusCode: 200,
@@ -81,10 +95,26 @@ exports.handler = async (event, context) => {
 
       if (error) throw error;
 
+      const camelData = {
+        id: data.id,
+        userId: data.user_id,
+        batchName: data.batch_name,
+        productName: data.product_name,
+        totalPricePaid: data.total_price_paid,
+        numberOfUnits: data.number_of_units,
+        unitCost: data.unit_cost,
+        projectedSaleCostPerUnit: data.projected_sale_cost_per_unit,
+        actualSaleCostPerUnit: data.actual_sale_cost_per_unit,
+        qtyInStock: data.qty_in_stock,
+        qtySold: data.qty_sold,
+        createdAt: data.created_at,
+        updatedAt: data.updated_at,
+      };
+
       return {
         statusCode: 201,
         headers,
-        body: JSON.stringify(toCamelCase(data))
+        body: JSON.stringify(camelData)
       };
     }
 
@@ -116,10 +146,26 @@ exports.handler = async (event, context) => {
 
       if (error) throw error;
 
+      const camelData = {
+        id: data.id,
+        userId: data.user_id,
+        batchName: data.batch_name,
+        productName: data.product_name,
+        totalPricePaid: data.total_price_paid,
+        numberOfUnits: data.number_of_units,
+        unitCost: data.unit_cost,
+        projectedSaleCostPerUnit: data.projected_sale_cost_per_unit,
+        actualSaleCostPerUnit: data.actual_sale_cost_per_unit,
+        qtyInStock: data.qty_in_stock,
+        qtySold: data.qty_sold,
+        createdAt: data.created_at,
+        updatedAt: data.updated_at,
+      };
+
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify(toCamelCase(data))
+        body: JSON.stringify(camelData)
       };
     }
 
