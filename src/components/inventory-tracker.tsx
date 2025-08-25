@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Plus, Trash2, Package, TrendingUp, Calculator, Edit2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { CurrencyInput } from "@/components/ui/currency-input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -248,15 +249,12 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                     <Label htmlFor="totalPricePaid" className="text-sm text-foreground/85">
                       Total Price Paid
                     </Label>
-                    <Input
+                    <CurrencyInput
                       id="totalPricePaid"
-                      type="number"
-                      step="0.01"
                       value={formData.totalPricePaid}
                       onChange={(e) => setFormData(prev => ({ ...prev, totalPricePaid: e.target.value }))}
                       placeholder="0.00"
                       className="bg-input border-primary/30 text-foreground"
-                      required
                     />
                   </div>
                   <div className="space-y-2">
@@ -280,15 +278,12 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                     <Label htmlFor="projectedSaleCostPerUnit" className="text-sm text-foreground/85">
                       Projected Sale Price Per Unit
                     </Label>
-                    <Input
+                    <CurrencyInput
                       id="projectedSaleCostPerUnit"
-                      type="number"
-                      step="0.01"
                       value={formData.projectedSaleCostPerUnit}
                       onChange={(e) => setFormData(prev => ({ ...prev, projectedSaleCostPerUnit: e.target.value }))}
                       placeholder="0.00"
                       className="bg-input border-primary/30 text-foreground"
-                      required
                     />
                   </div>
                   <div className="space-y-2">

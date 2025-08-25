@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { CurrencyInput } from "@/components/ui/currency-input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { CalendarX, CalendarPlus, Plus, Trash2, X } from "lucide-react";
@@ -197,14 +198,12 @@ export function WeekCalculator({
           <Label className="text-sm font-medium text-muted-foreground">
             {weekNumber === 1 ? "Cash on Hand" : `Starting Balance (from Week ${weekNumber - 1})`}
           </Label>
-          <div className="relative mt-2">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
-            <Input
+          <div className="mt-2">
+            <CurrencyInput
               type="text"
               value={weekNumber === 1 ? cashOnHand.toFixed(2) : startingBalance.toFixed(2)}
               readOnly
-              className="pl-8 text-lg font-medium text-right bg-input text-foreground border-border"
-              step="0.01"
+              className="text-lg font-medium bg-input text-foreground border-border"
             />
           </div>
         </div>
@@ -245,18 +244,12 @@ export function WeekCalculator({
                   placeholder="Income source..."
                   className="flex-1 text-base sm:text-sm bg-input text-foreground border-border"
                 />
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
-                  <Input
-                    type="number"
-                    inputMode="decimal"
-                    value={row.amount || ""}
-                    onChange={(e) => updateIncomeRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
-                    placeholder="0.00"
-                    className="w-28 sm:w-32 pl-8 text-right text-base sm:text-sm bg-input text-foreground border-border"
-                    step="0.01"
-                  />
-                </div>
+                <CurrencyInput
+                  value={row.amount || ""}
+                  onChange={(e) => updateIncomeRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
+                  placeholder="0.00"
+                  className="w-28 sm:w-32 text-base sm:text-sm bg-input text-foreground border-border"
+                />
                 <Button
                   variant="ghost"
                   size="sm"
@@ -297,18 +290,12 @@ export function WeekCalculator({
                   placeholder="Expense item..."
                   className="flex-1 text-base sm:text-sm bg-input text-foreground border-border"
                 />
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
-                  <Input
-                    type="number"
-                    inputMode="decimal"
-                    value={row.amount || ""}
-                    onChange={(e) => updateExpenseRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
-                    placeholder="0.00"
-                    className="w-28 sm:w-32 pl-8 text-right text-base sm:text-sm bg-input text-foreground border-border"
-                    step="0.01"
-                  />
-                </div>
+                <CurrencyInput
+                  value={row.amount || ""}
+                  onChange={(e) => updateExpenseRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
+                  placeholder="0.00"
+                  className="w-28 sm:w-32 text-base sm:text-sm bg-input text-foreground border-border"
+                />
                 <Button
                   variant="ghost"
                   size="sm"
