@@ -194,7 +194,7 @@ export function WeekCalculator({
       <CardContent className="space-y-6">
         {/* Cash on Hand / Starting Balance */}
         <div>
-          <Label className="text-sm font-medium text-muted-foreground">
+          <Label className="text-sm font-medium">
             {weekNumber === 1 ? "Cash on Hand" : `Starting Balance (from Week ${weekNumber - 1})`}
           </Label>
           <div className="mt-2">
@@ -315,7 +315,7 @@ export function WeekCalculator({
         </div>
 
         {/* Balance */}
-        <div className="border-t border-border pt-6">
+        <div className="border-t border-primary pt-6">
           <div className="text-center">
             <div className="text-sm text-muted-foreground mb-2">
               Week {weekNumber} Balance

@@ -188,7 +188,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
   };
 
   return (
-    <Card className="border-2 border-primary/20">
+    <Card className="border border-border">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -208,7 +208,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                 Add Batch
               </Button>
             </DialogTrigger>
-            <DialogContent className="bg-background border-2 border-primary/20">
+            <DialogContent className="bg-background border border-border">
               <DialogHeader>
                 <DialogTitle className="text-muted-foreground">
                   {editingBatch ? "Edit Batch" : "Add New Batch"}
@@ -225,7 +225,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                       value={formData.batchName}
                       onChange={(e) => setFormData(prev => ({ ...prev, batchName: e.target.value }))}
                       placeholder="e.g., Chocolate Cakes - Batch 1"
-                      className="bg-input border-primary/30 text-foreground"
+                      className="bg-input border-border text-foreground"
                       required
                     />
                   </div>
@@ -238,7 +238,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                       value={formData.productName}
                       onChange={(e) => setFormData(prev => ({ ...prev, productName: e.target.value }))}
                       placeholder="e.g., Chocolate Cake"
-                      className="bg-input border-primary/30 text-foreground"
+                      className="bg-input border-border text-foreground"
                       required
                     />
                   </div>
@@ -254,7 +254,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                       value={formData.totalPricePaid}
                       onChange={(e) => setFormData(prev => ({ ...prev, totalPricePaid: e.target.value }))}
                       placeholder="0.00"
-                      className="bg-input border-primary/30 text-foreground"
+                      className="bg-input border-border text-foreground"
                     />
                   </div>
                   <div className="space-y-2">
@@ -267,7 +267,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                       value={formData.numberOfUnits}
                       onChange={(e) => setFormData(prev => ({ ...prev, numberOfUnits: e.target.value }))}
                       placeholder="0"
-                      className="bg-input border-primary/30 text-foreground"
+                      className="bg-input border-border text-foreground"
                       required
                     />
                   </div>
@@ -283,12 +283,12 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                       value={formData.projectedSaleCostPerUnit}
                       onChange={(e) => setFormData(prev => ({ ...prev, projectedSaleCostPerUnit: e.target.value }))}
                       placeholder="0.00"
-                      className="bg-input border-primary/30 text-foreground"
+                      className="bg-input border-border text-foreground"
                     />
                   </div>
                   <div className="space-y-2">
                     <Label className="text-sm text-muted-foreground">Unit Cost (Auto)</Label>
-                    <div className="flex items-center h-10 px-3 rounded-md border border-primary/30 bg-muted text-muted-foreground">
+                    <div className="flex items-center h-10 px-3 rounded-md border border-border bg-muted text-muted-foreground">
                       {formatCurrency(calculateUnitCost())}
                     </div>
                   </div>
@@ -305,7 +305,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                       value={formData.qtyInStock}
                       onChange={(e) => setFormData(prev => ({ ...prev, qtyInStock: e.target.value }))}
                       placeholder="0"
-                      className="bg-input border-primary/30 text-foreground"
+                      className="bg-input border-border text-foreground"
                       required
                     />
                   </div>
@@ -347,10 +347,10 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
               return (
                 <div
                   key={batch.id}
-                  className={`p-4 rounded-lg border-2 transition-colors cursor-pointer ${
-                    isSelected 
-                      ? 'border-primary bg-primary/5' 
-                      : 'border-primary/20 hover:border-primary/40 hover:bg-primary/5'
+                  className={`p-4 rounded-lg border transition-colors cursor-pointer ${
+                    isSelected
+                      ? 'border-primary bg-primary/5'
+                      : 'border-border hover:border-primary hover:bg-primary/5'
                   }`}
                   onClick={() => onBatchSelect?.(batch)}
                 >

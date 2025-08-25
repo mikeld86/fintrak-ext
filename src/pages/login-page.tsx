@@ -9,11 +9,12 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Eye, EyeOff, LogIn, Calculator } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useTheme } from "@/contexts/simple-theme-context";
-
 import blueLogo from "@/assets/Blue.svg";
 import pinkLogo from "@/assets/Pink.svg";
 import yellowLogo from "@/assets/Yellow.svg";
-
+import blueLogo from "@/assets/Blue.svg";
+import pinkLogo from "@/assets/Pink.svg";
+import yellowLogo from "@/assets/Yellow.svg";
 import blueLogo from "../assets/Blue.svg";
 import pinkLogo from "../assets/Pink.svg";
 import yellowLogo from "../assets/Yellow.svg";
@@ -58,7 +59,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <Card className="border-2 border-primary/20">
+        <Card className="border border-border">
           <CardHeader className="text-center pb-4">
             <div className="flex justify-center mb-4">
               <img
@@ -86,7 +87,7 @@ export default function LoginPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Enter your username"
-                  className="bg-input text-foreground border-2 border-primary/20 focus:border-primary hover:border-primary/40"
+                  className="bg-input text-foreground border border-border focus:border-primary hover:border-primary"
                   disabled={loginMutation.isPending}
                 />
               </div>
@@ -102,7 +103,7 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
-                    className="bg-input text-foreground border-2 border-primary/20 focus:border-primary hover:border-primary/40 pr-10"
+                    className="bg-input text-foreground border border-border focus:border-primary hover:border-primary pr-10"
                     disabled={loginMutation.isPending}
                   />
                   <Button

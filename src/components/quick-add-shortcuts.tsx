@@ -34,7 +34,7 @@ export function QuickAddShortcuts({ onAddIncome, onAddExpense, weekNumber }: Qui
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="bg-primary/5 dark:bg-primary/10 rounded-lg border border-primary/20 dark:border-primary/30">
+    <div className="bg-primary/5 dark:bg-primary/10 rounded-lg border border-border">
       {/* Collapsible Header */}
       <Button
         onClick={() => setIsExpanded(!isExpanded)}
