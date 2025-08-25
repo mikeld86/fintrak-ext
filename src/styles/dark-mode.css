@@ -1,5 +1,3 @@
-/* Fresh Dark Mode Implementation - Starting from scratch */
-
 /* Dark mode CSS variables using the correct HSL format for Tailwind */
 .dark {
   --background: 222.2 84% 4.9%;
