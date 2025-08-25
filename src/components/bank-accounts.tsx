@@ -85,7 +85,7 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Building2 className="mr-3 h-5 w-5 text-primary" />
-            <h3 className="text-sm font-medium text-foreground/85">
+            <h3 className="text-sm font-medium text-muted-foreground">
               Bank Accounts
             </h3>
           </div>
@@ -138,7 +138,7 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
         {bankAccountRows.length > 0 && (
           <div className="border-t border-border pt-3">
             <div className="flex justify-between items-center">
-              <span className="text-sm font-medium text-foreground/85">
+              <span className="text-sm font-medium text-muted-foreground">
                 Total Bank Balance:
               </span>
               <span className="text-sm font-semibold text-primary">

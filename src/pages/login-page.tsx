@@ -65,7 +65,7 @@ export default function LoginPage() {
               )}
               
               <div className="space-y-2">
-                <Label htmlFor="username" className="text-sm font-medium text-foreground/85">
+                <Label htmlFor="username" className="text-sm font-medium text-muted-foreground">
                   Username
                 </Label>
                 <Input
@@ -80,7 +80,7 @@ export default function LoginPage() {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-medium text-foreground/85">
+                <Label htmlFor="password" className="text-sm font-medium text-muted-foreground">
                   Password
                 </Label>
                 <div className="relative">
