@@ -1,24 +1,25 @@
 import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-// Dark blue used throughout the app as the background color
-// used here to ensure button text matches the design palette
-const BUTTON_TEXT_COLOR = "#020817"
+const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
+  ({ className, type, ...props }, ref) => {
+    return (
+      <input
+        type={type}
+        className={cn(
+          "flex h-10 w-full rounded-md border-[0.5px] border-border bg-input px-3 py-2 text-base text-foreground ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-1 focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 md:text-sm touch-manipulation [-webkit-tap-highlight-color:transparent]",
+          className
+        )}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Input.displayName = "Input"
 
-const buttonVariants = cva(
-
-  `inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 touch-manipulation [-webkit-tap-highlight-color:transparent] [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-[${BUTTON_TEXT_COLOR}] bg-[linear-gradient(50deg,hsl(var(--primary))_15%,hsl(var(--primary))_60%,hsl(var(--secondary))_100%)]`,
-
-
-  `inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 touch-manipulation [-webkit-tap-highlight-color:transparent] text-[${BUTTON_TEXT_COLOR}] bg-[linear-gradient(-50deg,hsl(var(--primary))_15%,hsl(var(--primary))_60%,hsl(var(--secondary))_100%)]`,
-
-    `inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 touch-manipulation [-webkit-tap-highlight-color:transparent] text-[${BUTTON_TEXT_COLOR}] bg-[linear-gradient(90deg,hsl(var(--primary))_15%,hsl(var(--primary))_60%,hsl(var(--secondary))_100%)]`,
-
-
-  {
+export { Input }
     variants: {
       variant: {
         default: "hover:opacity-90",
