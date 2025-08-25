@@ -100,7 +100,7 @@ export function CashCalculator({ denominations, onUpdate }: CashCalculatorProps)
               </div>
             );
           })}
-          <div className="border-t-[1.25px] border-primary/70 pt-3">
+          <div className="border-[1.25px] border-primary/70 pt-3">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium text-muted-foreground">
                 Notes Total:
@@ -151,7 +151,7 @@ export function CashCalculator({ denominations, onUpdate }: CashCalculatorProps)
               </div>
             );
           })}
-          <div className="border-t-[1.25px] border-primary/70 pt-3">
+          <div className="border-[1.25px] border-primary/70 pt-3">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium text-muted-foreground">
                 Coins Total:
@@ -165,7 +165,7 @@ export function CashCalculator({ denominations, onUpdate }: CashCalculatorProps)
       </div>
 
       {/* Overall Total */}
-      <div className="md:col-span-2 border-t-[1.25px] border-primary/70 pt-4">
+      <div className="md:col-span-2 border-[1.25px] border-primary/70 pt-4">
         <div className="flex justify-between items-center">
           <span className="text-lg font-medium text-muted-foreground">
             Total Cash on Hand:
