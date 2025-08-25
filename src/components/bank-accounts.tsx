@@ -108,13 +108,13 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
                 value={row.label}
                 onChange={(e) => updateBankAccountRow(row.id, 'label', e.target.value)}
                 placeholder="Account name..."
-                className="flex-1 text-base sm:text-sm"
+                className="flex-1 text-base"
               />
               <CurrencyInput
                 value={row.amount || ""}
                 onChange={(e) => updateBankAccountRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
                 placeholder="0.00"
-                className="w-28 sm:w-32 text-base sm:text-sm"
+                className="w-28 sm:w-32 text-base"
               />
               <Button
                 variant="ghost"
