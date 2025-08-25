@@ -412,7 +412,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                         </div>
                         <div>
                           <span className="text-foreground/60">Projected Profit/Unit:</span>
-                          <div className={`font-medium ${breakEven.projectedProfitPerUnit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          <div className={`font-medium ${breakEven.projectedProfitPerUnit >= 0 ? 'text-success' : 'text-destructive'}`}>
                             {formatCurrency(breakEven.projectedProfitPerUnit)}
                           </div>
                         </div>
@@ -456,7 +456,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                             deleteBatchMutation.mutate(batch.id);
                           }
                         }}
-                        className="border-red-300 text-red-600 hover:bg-red-50 h-8 px-2"
+                        className="border-red-300 text-destructive hover:bg-red-50 h-8 px-2"
                       >
                         <Trash2 className="h-3 w-3" />
                       </Button>
