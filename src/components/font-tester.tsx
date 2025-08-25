@@ -18,8 +18,8 @@ const FONT_OPTIONS = [
 ];
 
 export function FontTester() {
-  const [selectedFont, setSelectedFont] = useState("DM Sans");
-  const [appliedFont, setAppliedFont] = useState("DM Sans");
+  const [selectedFont, setSelectedFont] = useState("Space Grotesk");
+  const [appliedFont, setAppliedFont] = useState("Space Grotesk");
 
   // Load Google Fonts dynamically
   useEffect(() => {
@@ -56,9 +56,9 @@ export function FontTester() {
 
   const resetFont = () => {
     // Reset to default font
-    document.body.style.fontFamily = '';
-    setAppliedFont("DM Sans");
-    setSelectedFont("DM Sans");
+    document.body.style.fontFamily = '"Space Grotesk", sans-serif';
+    setAppliedFont("Space Grotesk");
+    setSelectedFont("Space Grotesk");
   };
 
   return (
