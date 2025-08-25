@@ -136,7 +136,7 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
         </div>
         
         {bankAccountRows.length > 0 && (
-          <div className="border-t-[0.5px] border-primary/70 pt-3">
+          <div className="border-t-[1.25px] border-primary/70 pt-3">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium text-muted-foreground">
                 Total Bank Balance:
