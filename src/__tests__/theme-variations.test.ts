@@ -11,7 +11,7 @@ describe("theme variations", () => {
 
     for (const theme of themes) {
       const pattern = new RegExp(
-        `body\\.dark\\[data-theme="${theme}"\\],\\s*\\.dark body\\[data-theme="${theme}"\\]`,
+        `\\.dark \\[data-theme="${theme}"\\],\\s*\\[data-theme="${theme}"\\]\\.dark`,
       );
       expect(pattern.test(css)).toBe(true);
     }

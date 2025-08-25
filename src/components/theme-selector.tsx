@@ -1,7 +1,6 @@
 import React from "react";
 import { useTheme } from "@/contexts/simple-theme-context";
 import { themeColors, Theme } from "@/constants/theme";
-import "./theme-selector.css";
 
 const themeOptions = Object.keys(themeColors) as Theme[];
 
@@ -12,15 +11,15 @@ export function ThemeSelector() {
 
   return (
     <div className="flex items-center space-x-2 sm:space-x-3">
-      {/* Theme Color Buttons - Hidden on mobile */}
-      <div className="hidden md:flex items-center space-x-2">
+      {/* Theme Color Buttons - Visible on mobile */}
+      <div className="flex items-center space-x-2">
         {themeOptions.map((id) => (
           <button
             key={id}
             data-theme={id}
             onClick={() => setTheme(id)}
-            className={`theme-button w-10 h-4 rounded-full border-2 border-primary shadow-md transition-all bg-primary ${
-              theme === id ? "ring-2" : ""
+            className={`w-10 h-4 rounded-full border-2 shadow-md transition-all bg-[hsl(var(--primary))] border-[hsl(var(--primary))] ${
+              theme === id ? "ring-2 ring-[hsl(var(--primary))]" : ""
             }`}
             aria-label={`${id.charAt(0).toUpperCase() + id.slice(1)} theme`}
           />

@@ -84,7 +84,7 @@ export function CashCalculator({ denominations, onUpdate }: CashCalculatorProps)
                     inputMode="numeric"
                     value={quantity || ""}
                     onChange={(e) => updateDenomination(note.key, parseInt(e.target.value) || 0)}
-                    className="w-16 text-right text-base bg-input text-foreground border-border"
+                    className="min-w-[4rem] flex-1 text-right text-base bg-input text-foreground border-border"
                     min="0"
                     placeholder="0"
                   />
@@ -129,7 +129,7 @@ export function CashCalculator({ denominations, onUpdate }: CashCalculatorProps)
                     inputMode="numeric"
                     value={quantity || ""}
                     onChange={(e) => updateDenomination(coin.key, parseInt(e.target.value) || 0)}
-                    className="w-16 text-right text-base bg-input text-foreground border-border"
+                    className="min-w-[4rem] flex-1 text-right text-base bg-input text-foreground border-border"
                     min="0"
                     placeholder="0"
                   />
