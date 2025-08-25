@@ -197,7 +197,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                         }));
                       }}
                       placeholder="0.00"
-                      className="bg-input text-foreground border-[0.5px] border-primary border-opacity-70"
+                      className="bg-input text-foreground border-[1.25px] border-primary border-opacity-70"
                     />
                   </div>
                 </div>
@@ -205,7 +205,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                 <div className="grid grid-cols-1 gap-4">
                   <div className="space-y-2">
                     <Label className="text-sm text-muted-foreground">Price Per Unit (Auto-calculated)</Label>
-                    <div className="flex items-center h-10 px-3 rounded-md border-[0.5px] border-primary border-opacity-70 bg-muted text-muted-foreground">
+                    <div className="flex items-center h-10 px-3 rounded-md border-[1.25px] border-primary border-opacity-70 bg-muted text-muted-foreground">
                       {formData.qty && formData.totalPrice ? 
                         formatCurrency(parseFloat(formData.totalPrice) / parseInt(formData.qty)) : 
                         formatCurrency(0)
@@ -232,7 +232,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                   </div>
                   <div className="space-y-2">
                     <Label className="text-sm text-muted-foreground">Balance Owing (Auto)</Label>
-                    <div className="flex items-center h-10 px-3 rounded-md border-[0.5px] border-primary border-opacity-70 bg-muted text-muted-foreground">
+                    <div className="flex items-center h-10 px-3 rounded-md border-[1.25px] border-primary border-opacity-70 bg-muted text-muted-foreground">
                       {formatCurrency(calculateBalance())}
                     </div>
                   </div>
@@ -247,7 +247,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                     value={formData.notes}
                     onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
                     placeholder="Customer details, payment method, etc."
-                    className="bg-input text-foreground border-[0.5px] border-primary border-opacity-70 resize-none"
+                    className="bg-input text-foreground border-[1.25px] border-primary border-opacity-70 resize-none"
                     rows={3}
                   />
                 </div>
