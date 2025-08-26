@@ -33,13 +33,11 @@ CREATE TABLE IF NOT EXISTS inventory_batches (
   user_id TEXT NOT NULL,
   batch_name TEXT NOT NULL,
   product_name TEXT NOT NULL,
-  total_price_paid TEXT NOT NULL,
-  number_of_units INTEGER NOT NULL,
-  unit_cost TEXT NOT NULL,
-  projected_sale_cost_per_unit TEXT DEFAULT '0',
-  actual_sale_cost_per_unit TEXT DEFAULT '0',
   qty_in_stock INTEGER NOT NULL DEFAULT 0,
   qty_sold INTEGER NOT NULL DEFAULT 0,
+  cost_per_unit TEXT NOT NULL,
+  projected_sale_cost_per_unit TEXT DEFAULT '0',
+  actual_sale_cost_per_unit TEXT DEFAULT '0',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -53,46 +51,10 @@ CREATE TABLE IF NOT EXISTS sales_records (
   price_per_unit TEXT NOT NULL,
   total_price TEXT NOT NULL,
   amount_paid TEXT NOT NULL,
-  balance_owing TEXT NOT NULL,
   notes TEXT DEFAULT '',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
-
--- Migrate existing inventory_batches data to the new schema
-ALTER TABLE inventory_batches
-  ADD COLUMN IF NOT EXISTS total_price_paid TEXT DEFAULT '0',
-  ADD COLUMN IF NOT EXISTS number_of_units INTEGER DEFAULT 0,
-  ADD COLUMN IF NOT EXISTS unit_cost TEXT DEFAULT '0';
-
-DO $$
-BEGIN
-  IF EXISTS (
-    SELECT 1 FROM information_schema.columns
-    WHERE table_name='inventory_batches' AND column_name='cost_per_unit'
-  ) THEN
-    UPDATE inventory_batches
-    SET
-      unit_cost = COALESCE(unit_cost, cost_per_unit, '0'),
-      number_of_units = CASE
-        WHEN number_of_units = 0 THEN COALESCE(qty_in_stock,0) + COALESCE(qty_sold,0)
-        ELSE number_of_units
-      END,
-      total_price_paid = CASE
-        WHEN total_price_paid = '0' THEN ((COALESCE(qty_in_stock,0) + COALESCE(qty_sold,0)) * COALESCE(cost_per_unit, '0')::numeric)::text
-        ELSE total_price_paid
-      END;
-    ALTER TABLE inventory_batches DROP COLUMN IF EXISTS cost_per_unit;
-  END IF;
-END $$;
-
--- Migrate existing sales_records data to include balance_owing
-ALTER TABLE sales_records
-  ADD COLUMN IF NOT EXISTS balance_owing TEXT DEFAULT '0';
-
-UPDATE sales_records
-SET balance_owing = (COALESCE(total_price, '0')::numeric - COALESCE(amount_paid, '0')::numeric)::text
-WHERE balance_owing = '0';
 
 -- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_financial_data_user_id ON financial_data(user_id);

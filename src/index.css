@@ -1,153 +1,100 @@
+@import "./styles/dark-mode.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: 222.86 84% 4.9%;
+  --background: 222.2 84% 4.9%;
   --foreground: 210 40% 85%;
-  --card: 225 59% 10.6%;
+  --card: 217.2 32.6% 17.5%;
   --card-foreground: 210 40% 98%;
-  --popover: 225 59% 10.6%;
+  --popover: 217.2 32.6% 17.5%;
   --popover-foreground: 210 40% 98%;
   --primary: 217.2 91.2% 59.8%;
   --primary-foreground: 210 40% 98%;
-  --secondary: 225 59% 10.6%;
+  --secondary: 217.2 32.6% 17.5%;
   --secondary-foreground: 210 40% 98%;
-  --muted: 225 59% 10.6%;
+  --muted: 217.2 32.6% 17.5%;
   --muted-foreground: 215 20.2% 65.1%;
-  --accent: 225 59% 10.6%;
+  --accent: 217.2 32.6% 17.5%;
   --accent-foreground: 210 40% 98%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 210 40% 98%;
-  --input: 222.86 84% 4.9%;
-  /* Match border and ring colors to the current theme */
-  --ring: var(--primary);
-  --border: var(--primary) / 1.25;
-  --card-border: var(--primary) / 1.25;
+  --success: 142.1 76.2% 36.3%;
+  --success-foreground: 210 40% 98%;
+  --border: 217.2 91.2% 59.8%;
+  --card-border: 217.2 91.2% 59.8%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 217.2 91.2% 59.8%;
   --radius: 0.75rem;
 }
 
-.dark {
-  --foreground: 210 40% 98%;
-  --card: 225 59% 10.6%;
-  --popover: 225 59% 10.6%;
-  --input: 222.86 84% 4.9%;
-  --primary: 217 91% 60%;
-  --primary-foreground: 222.86 84% 4.9%;
-  /* Dark mode specific charts */
-  --chart-1: 220 70% 50%;
-  --chart-2: 160 60% 45%;
-  --chart-3: 30 80% 55%;
-  --chart-4: 280 65% 60%;
-  --chart-5: 340 75% 55%;
+/* Override input styling for dark theme */
+.dark-input {
+  @apply bg-input text-foreground border-[0.5px] border-primary border-opacity-70;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground: 210 40% 98%;
-    --card: 225 59% 10.6%;
-    --popover: 225 59% 10.6%;
-    --input: 222.86 84% 4.9%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 222.86 84% 4.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-  }
-}
 
-@layer components {
-  .dark-input {
-    @apply bg-input text-foreground border-border;
-    border-width: 5px;
-  }
-  .text-muted {
-    @apply text-muted-foreground;
-  }
+/* Ensure proper text contrast */
+.text-muted {
+  @apply text-muted-foreground;
 }
 
 /* Theme color variations - iOS color palette */
-[data-theme="blue"] {
-  --primary: 218 100% 58%; /* #2979ff */
-  --secondary: 171 100% 54%; /* #16ffdb */
-  --primary-foreground: 0 0% 100%;
-  --border: var(--primary) / 1.25;
-  --ring: var(--primary);
+body[data-theme="blue"] {
+  --primary: hsl(211 100% 50%); /* #007AFF */
+  --primary-foreground: hsl(0 0% 100%);
 }
 
-[data-theme="pink"] {
-  --primary: 328 100% 50%; /* #ff0086 */
-  --secondary: 260 80% 50%; /* #5c19e5 */
-  --primary-foreground: 0 0% 100%;
-  --border: var(--primary) / 1.25;
-  --ring: var(--primary);
+body[data-theme="pink"] {
+  --primary: hsl(343 100% 59%); /* #FF2D55 */
+  --primary-foreground: hsl(0 0% 100%);
 }
 
-[data-theme="yellow"] {
-  --primary: 60 100% 50%; /* #ffff00 */
-  --secondary: 119 100% 50%; /* #06ff00 */
-  --primary-foreground: 0 0% 0%;
-  --border: var(--primary) / 1.25;
-  --ring: var(--primary);
+body[data-theme="green"] {
+  --primary: hsl(133 73% 63%); /* #4CD964 */
+  --primary-foreground: hsl(0 0% 0%);
 }
 
-.dark [data-theme="blue"],
-[data-theme="blue"].dark {
-  --primary: 218 100% 58%;
-  --secondary: 171 100% 54%;
-  --primary-foreground: 222.2 84% 4.9%;
-  --border: var(--primary) / 1.25;
-  --ring: var(--primary);
+body[data-theme="orange"] {
+  --primary: hsl(35 100% 50%); /* #FF9500 */
+  --primary-foreground: hsl(0 0% 0%);
 }
 
-.dark [data-theme="pink"],
-[data-theme="pink"].dark {
-  --primary: 328 100% 50%;
-  --secondary: 260 80% 50%;
-  --primary-foreground: 222.2 84% 4.9%;
-  --border: var(--primary) / 1.25;
-  --ring: var(--primary);
-}
-
-.dark [data-theme="yellow"],
-[data-theme="yellow"].dark {
-  --primary: 60 100% 50%;
-  --secondary: 119 100% 50%;
-  --primary-foreground: 222.2 84% 4.9%;
-  --border: var(--primary) / 1.25;
-  --ring: var(--primary);
+body[data-theme="red"] {
+  --primary: hsl(355 100% 59%); /* #FF3B30 */
+  --primary-foreground: hsl(0 0% 100%);
 }
 
 /* Enhanced contrast for mobile light mode */
 @media (max-width: 768px) {
   :not(.dark) .text-gray-500 {
-    color: hsl(210, 25%, 40%);
+    color: hsl(210 25% 40%);
   }
 
   :not(.dark) .text-gray-600 {
-    color: hsl(210, 25%, 30%);
+    color: hsl(210 25% 30%);
   }
 
   :not(.dark) .text-gray-700 {
-    color: hsl(210, 25%, 20%);
+    color: hsl(210 25% 20%);
   }
 
   :not(.dark) .border-gray-200 {
-    border-color: hsl(210, 25%, 75%);
+    border-color: hsl(210 25% 75%);
   }
 
   :not(.dark) .border-gray-300 {
-    border-color: hsl(210, 25%, 65%);
+    border-color: hsl(210 25% 65%);
   }
 
   :not(.dark) .bg-gray-50 {
-    background-color: hsl(210, 25%, 96%);
+    background-color: hsl(210 25% 96%);
   }
 
   :not(.dark) .bg-gray-100 {
-    background-color: hsl(210, 25%, 90%);
+    background-color: hsl(210 25% 90%);
   }
 }
 
@@ -155,7 +102,7 @@
   /* Space Grotesk font applied globally */
   body {
     @apply font-sans antialiased;
-    font-family: "Space Grotesk", sans-serif;
+    font-family: "Space Grotesk", var(--font-sans), sans-serif;
     color: hsl(var(--foreground));
     background: hsl(var(--background));
   }

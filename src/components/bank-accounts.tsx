@@ -117,10 +117,10 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
                 className="w-28 sm:w-32 text-base"
               />
               <Button
-                variant="destructive"
+                variant="ghost"
                 size="sm"
                 onClick={() => removeBankAccountRow(row.id)}
-                className="p-2"
+                className="text-destructive hover:text-destructive/80 p-2"
               >
                 <Trash2 className="h-4 w-4" />
               </Button>
@@ -136,7 +136,7 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
         </div>
         
         {bankAccountRows.length > 0 && (
-          <div className="border-t-[1.25px] border-primary/70 pt-3">
+          <div className="border-t border-border pt-3">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium text-muted-foreground">
                 Total Bank Balance:

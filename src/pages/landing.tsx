@@ -61,6 +61,7 @@ export default function Landing() {
           <Button
             onClick={() => window.location.href = '/api/login'}
             size="lg"
+            className="px-8 py-3 text-lg"
           >
             Get Started - Sign In
           </Button>

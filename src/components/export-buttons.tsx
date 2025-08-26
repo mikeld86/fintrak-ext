@@ -29,24 +29,22 @@ export function ExportButtons({ data }: ExportButtonsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
+        <Button 
+          variant="ghost" 
           size="sm"
+          className="text-muted-foreground hover:text-foreground"
         >
           <Download className="h-4 w-4 mr-1 sm:mr-2" />
           <span className="hidden sm:inline">Export</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        className="bg-background border-[0.5px] border-primary border-opacity-70 shadow-lg"
-      >
+      <DropdownMenuContent align="end" className="bg-background border border-border shadow-lg">
         <DropdownMenuItem onClick={handleExcelExport} className="text-foreground hover:bg-accent hover:text-accent-foreground">
-          <FileSpreadsheet className="h-4 w-4 mr-2 text-green-600" />
+          <FileSpreadsheet className="h-4 w-4 mr-2 text-success" />
           Export to Excel (.xlsx)
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handlePDFExport} className="text-foreground hover:bg-accent hover:text-accent-foreground">
-          <FileText className="h-4 w-4 mr-2 text-red-600" />
+          <FileText className="h-4 w-4 mr-2 text-destructive" />
           Export to PDF (.pdf)
         </DropdownMenuItem>
       </DropdownMenuContent>

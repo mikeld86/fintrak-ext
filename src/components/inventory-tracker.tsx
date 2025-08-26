@@ -41,16 +41,11 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
           credentials: "include",
         });
         if (response.status === 401) {
-          console.log("Loading inventory from localStorage");
           // Load from localStorage when server unavailable
           const localData = localStorage.getItem('fintrak-inventory-batches');
           return localData ? JSON.parse(localData) : [];
         }
-        if (!response.ok) {
-          console.log("Loading inventory from localStorage");
-          const localData = localStorage.getItem('fintrak-inventory-batches');
-          return localData ? JSON.parse(localData) : [];
-        }
+        if (!response.ok) return [];
         const data = await response.json();
         // Save to localStorage as backup
         localStorage.setItem('fintrak-inventory-batches', JSON.stringify(data));
@@ -107,19 +102,12 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
   const deleteBatchMutation = useMutation({
     mutationFn: async (batchId: string) => {
       try {
-        const res = await apiRequest("DELETE", `/api/inventory-batches/${batchId}`);
-        if (res.status !== 204) {
-          throw new Error(`Unexpected response: ${res.status}`);
-        }
-      } catch (error: any) {
-        if (error instanceof TypeError || error.message.includes('Failed to fetch')) {
-          // Offline mode - remove from localStorage
-          const localData = JSON.parse(localStorage.getItem('fintrak-inventory-batches') || '[]');
-          const filtered = localData.filter((b: any) => b.id !== batchId);
-          localStorage.setItem('fintrak-inventory-batches', JSON.stringify(filtered));
-        } else {
-          throw error;
-        }
+        await apiRequest("DELETE", `/api/inventory-batches/${batchId}`);
+      } catch (error) {
+        // Offline mode - remove from localStorage
+        const localData = JSON.parse(localStorage.getItem('fintrak-inventory-batches') || '[]');
+        const filtered = localData.filter((b: any) => b.id !== batchId);
+        localStorage.setItem('fintrak-inventory-batches', JSON.stringify(filtered));
       }
     },
     onSuccess: () => {
@@ -200,7 +188,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
   };
 
   return (
-    <Card>
+    <Card className="border-2 border-primary/20">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -220,7 +208,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                 Add Batch
               </Button>
             </DialogTrigger>
-            <DialogContent className="bg-background">
+            <DialogContent className="bg-background border-2 border-primary/20">
               <DialogHeader>
                 <DialogTitle className="text-muted-foreground">
                   {editingBatch ? "Edit Batch" : "Add New Batch"}
@@ -235,11 +223,9 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                     <Input
                       id="batchName"
                       value={formData.batchName}
-                      onChange={(e) =>
-                        setFormData(prev => ({ ...prev, batchName: e.target.value }))
-                      }
+                      onChange={(e) => setFormData(prev => ({ ...prev, batchName: e.target.value }))}
                       placeholder="e.g., Chocolate Cakes - Batch 1"
-                      className="bg-input text-foreground"
+                      className="bg-input border-primary/30 text-foreground"
                       required
                     />
                   </div>
@@ -250,11 +236,9 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                     <Input
                       id="productName"
                       value={formData.productName}
-                      onChange={(e) =>
-                        setFormData(prev => ({ ...prev, productName: e.target.value }))
-                      }
+                      onChange={(e) => setFormData(prev => ({ ...prev, productName: e.target.value }))}
                       placeholder="e.g., Chocolate Cake"
-                      className="bg-input text-foreground"
+                      className="bg-input border-primary/30 text-foreground"
                       required
                     />
                   </div>
@@ -268,11 +252,9 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                     <CurrencyInput
                       id="totalPricePaid"
                       value={formData.totalPricePaid}
-                      onChange={(e) =>
-                        setFormData(prev => ({ ...prev, totalPricePaid: e.target.value }))
-                      }
+                      onChange={(e) => setFormData(prev => ({ ...prev, totalPricePaid: e.target.value }))}
                       placeholder="0.00"
-                      className="bg-input text-foreground border-[0.5px] border-primary border-opacity-70"
+                      className="bg-input border-primary/30 text-foreground"
                     />
                   </div>
                   <div className="space-y-2">
@@ -283,11 +265,9 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                       id="numberOfUnits"
                       type="number"
                       value={formData.numberOfUnits}
-                      onChange={(e) =>
-                        setFormData(prev => ({ ...prev, numberOfUnits: e.target.value }))
-                      }
+                      onChange={(e) => setFormData(prev => ({ ...prev, numberOfUnits: e.target.value }))}
                       placeholder="0"
-                      className="bg-input text-foreground"
+                      className="bg-input border-primary/30 text-foreground"
                       required
                     />
                   </div>
@@ -301,16 +281,14 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                     <CurrencyInput
                       id="projectedSaleCostPerUnit"
                       value={formData.projectedSaleCostPerUnit}
-                      onChange={(e) =>
-                        setFormData(prev => ({ ...prev, projectedSaleCostPerUnit: e.target.value }))
-                      }
+                      onChange={(e) => setFormData(prev => ({ ...prev, projectedSaleCostPerUnit: e.target.value }))}
                       placeholder="0.00"
-                      className="bg-input text-foreground border-[0.5px] border-primary border-opacity-70"
+                      className="bg-input border-primary/30 text-foreground"
                     />
                   </div>
                   <div className="space-y-2">
                     <Label className="text-sm text-muted-foreground">Unit Cost (Auto)</Label>
-                    <div className="flex items-center h-10 px-3 rounded-md border-[0.5px] border-primary border-opacity-70 bg-muted text-muted-foreground">
+                    <div className="flex items-center h-10 px-3 rounded-md border border-primary/30 bg-muted text-muted-foreground">
                       {formatCurrency(calculateUnitCost())}
                     </div>
                   </div>
@@ -325,21 +303,20 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                       id="qtyInStock"
                       type="number"
                       value={formData.qtyInStock}
-                      onChange={(e) =>
-                        setFormData(prev => ({ ...prev, qtyInStock: e.target.value }))
-                      }
+                      onChange={(e) => setFormData(prev => ({ ...prev, qtyInStock: e.target.value }))}
                       placeholder="0"
-                      className="bg-input text-foreground"
+                      className="bg-input border-primary/30 text-foreground"
                       required
                     />
                   </div>
                 </div>
 
                 <div className="flex justify-end gap-2 pt-4">
-                  <Button
-                    type="button"
-                    variant="outline"
+                  <Button 
+                    type="button" 
+                    variant="outline" 
                     onClick={() => setIsAddDialogOpen(false)}
+                    className="border-primary/30"
                   >
                     Cancel
                   </Button>
@@ -371,10 +348,10 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
               return (
                 <div
                   key={batch.id}
-                  className={`p-4 rounded-lg border-[0.5px] transition-colors cursor-pointer ${
-                    isSelected
-                      ? 'border-primary bg-primary/5'
-                      : 'border-primary/70 hover:border-primary hover:bg-primary/5'
+                  className={`p-4 rounded-lg border-2 transition-colors cursor-pointer ${
+                    isSelected 
+                      ? 'border-primary bg-primary/5' 
+                      : 'border-primary/20 hover:border-primary/40 hover:bg-primary/5'
                   }`}
                   onClick={() => onBatchSelect?.(batch)}
                 >
@@ -435,7 +412,13 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                         </div>
                         <div>
                           <span className="text-muted-foreground">Projected Profit/Unit:</span>
-                          <div className={`font-medium ${breakEven.projectedProfitPerUnit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          <div
+                            className={`font-medium ${
+                              breakEven.projectedProfitPerUnit >= 0
+                                ? 'text-success'
+                                : 'text-destructive'
+                            }`}
+                          >
                             {formatCurrency(breakEven.projectedProfitPerUnit)}
                           </div>
                         </div>
@@ -466,20 +449,20 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                           e.stopPropagation();
                           handleEdit(batch);
                         }}
-                        className="h-8 px-2"
+                        className="border-primary/30 h-8 px-2"
                       >
                         <Edit2 className="h-3 w-3" />
                       </Button>
                       <Button
                         size="sm"
-                        variant="destructive"
+                        variant="outline"
                         onClick={(e) => {
                           e.stopPropagation();
                           if (confirm("Delete this batch?")) {
                             deleteBatchMutation.mutate(batch.id);
                           }
                         }}
-                        className="h-8 px-2"
+                        className="border-destructive/30 text-destructive hover:bg-destructive/10 h-8 px-2"
                       >
                         <Trash2 className="h-3 w-3" />
                       </Button>

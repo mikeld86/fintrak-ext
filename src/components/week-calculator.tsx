@@ -182,9 +182,10 @@ export function WeekCalculator({
           </div>
           {canRemove && onRemove && (
             <Button
-              variant="destructive"
+              variant="ghost" 
               size="sm"
               onClick={onRemove}
+              className="text-destructive hover:text-destructive/80 hover:bg-destructive/10"
             >
               <X className="h-4 w-4" />
             </Button>
@@ -194,7 +195,7 @@ export function WeekCalculator({
       <CardContent className="space-y-6">
         {/* Cash on Hand / Starting Balance */}
         <div>
-          <Label className="text-sm font-medium">
+          <Label className="text-sm font-medium text-muted-foreground">
             {weekNumber === 1 ? "Cash on Hand" : `Starting Balance (from Week ${weekNumber - 1})`}
           </Label>
           <div className="mt-2">
@@ -202,7 +203,7 @@ export function WeekCalculator({
               type="text"
               value={weekNumber === 1 ? cashOnHand.toFixed(2) : startingBalance.toFixed(2)}
               readOnly
-              className="text-lg font-medium bg-input text-foreground border-[1.25px] border-primary border-opacity-70"
+              className="text-lg font-medium bg-input text-foreground border-border"
             />
           </div>
         </div>
@@ -241,19 +242,19 @@ export function WeekCalculator({
                   value={row.label}
                   onChange={(e) => updateIncomeRow(row.id, 'label', e.target.value)}
                   placeholder="Income source..."
-                  className="flex-1 text-base bg-input text-foreground"
+                  className="flex-1 text-base bg-input text-foreground border-border"
                 />
                 <CurrencyInput
                   value={row.amount || ""}
                   onChange={(e) => updateIncomeRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
                   placeholder="0.00"
-                  className="w-28 sm:w-32 text-base bg-input text-foreground border-[1.25px] border-primary border-opacity-70"
+                  className="w-28 sm:w-32 text-base bg-input text-foreground border-border"
                 />
                 <Button
-                  variant="destructive"
+                  variant="ghost"
                   size="sm"
                   onClick={() => removeIncomeRow(row.id)}
-                  className="p-2"
+                  className="text-destructive hover:text-destructive/80 p-2"
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -287,19 +288,19 @@ export function WeekCalculator({
                   value={row.label}
                   onChange={(e) => updateExpenseRow(row.id, 'label', e.target.value)}
                   placeholder="Expense item..."
-                  className="flex-1 text-base bg-input text-foreground"
+                  className="flex-1 text-base bg-input text-foreground border-border"
                 />
                 <CurrencyInput
                   value={row.amount || ""}
                   onChange={(e) => updateExpenseRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
                   placeholder="0.00"
-                  className="w-28 sm:w-32 text-base bg-input text-foreground border-[1.25px] border-primary border-opacity-70"
+                  className="w-28 sm:w-32 text-base bg-input text-foreground border-border"
                 />
                 <Button
-                  variant="destructive"
+                  variant="ghost"
                   size="sm"
                   onClick={() => removeExpenseRow(row.id)}
-                  className="p-2"
+                  className="text-destructive hover:text-destructive/80 p-2"
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -315,7 +316,7 @@ export function WeekCalculator({
         </div>
 
         {/* Balance */}
-        <div className="border-t-[0.5px] border-primary/70 pt-6">
+        <div className="border-t border-border pt-6">
           <div className="text-center">
             <div className="text-sm text-muted-foreground mb-2">
               Week {weekNumber} Balance

@@ -1,0 +1,93 @@
+/* Fresh Dark Mode Implementation - Starting from scratch */
+
+/* Dark mode CSS variables using the correct HSL format for Tailwind */
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 217 91% 60%;
+  --primary-foreground: 222.2 84% 4.9%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --success: 142.1 76.2% 36.3%;
+  --success-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
+  --chart-1: 220 70% 50%;
+  --chart-2: 160 60% 45%;
+  --chart-3: 30 80% 55%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
+}
+
+/* Override the theme blue primary color for dark mode */
+body.dark[data-theme="blue"],
+.dark body[data-theme="blue"] {
+  --primary: 217 91% 60%; /* Blue color that works in dark mode */
+  --primary-foreground: 222.2 84% 4.9%;
+}
+
+/* Ensure elements use dark theme borders */
+.dark * {
+  border-color: hsl(var(--border));
+}
+
+/* Card backgrounds */
+.dark .bg-card {
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+}
+
+/* Input styling */
+.dark input {
+  background-color: hsl(var(--input));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+}
+
+.dark input:focus {
+  --tw-ring-color: hsl(var(--ring));
+}
+
+/* Button styling */
+.dark .bg-primary {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+/* Text colors */
+.dark .text-foreground {
+  color: hsl(var(--foreground));
+}
+
+.dark .text-muted-foreground {
+  color: hsl(var(--muted-foreground));
+}
+
+.dark .text-primary {
+  color: hsl(var(--primary));
+}
+
+/* Token-based background helpers */
+.dark .bg-muted {
+  background-color: hsl(var(--muted));
+}
+
+.dark .bg-background {
+  background-color: hsl(var(--background));
+}
+
+/* Border colors */
+.dark .border-border {
+  border-color: hsl(var(--border));
+}
