@@ -8,12 +8,8 @@ import { useLocation } from "wouter";
 import type { InventoryBatch } from "@shared/schema";
 
 import blueLogo from "@/assets/Blue.svg";
-import pinkLogo from "@/assets/Pink.svg";
-import yellowLogo from "@/assets/Yellow.svg";
 
 import blueLogo from "../assets/Blue.svg";
-import pinkLogo from "../assets/Pink.svg";
-import yellowLogo from "../assets/Yellow.svg";
 
 
 export default function InventoryPage() {
