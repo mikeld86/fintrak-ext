@@ -1,8 +1,11 @@
+import { useLocation } from "wouter";
 import { Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Landing() {
+  const [, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
   return (
     <div className="min-h-screen bg-background transition-colors duration-200">
       <div className="container mx-auto px-4 py-16">
@@ -59,9 +62,8 @@ export default function Landing() {
 
         <div className="text-center">
           <Button
-            onClick={() => window.location.href = '/api/login'}
+            onClick={() => setLocation("/login")}
             size="lg"
-            className="px-8 py-3 text-lg"
           >
             Get Started - Sign In
           </Button>
