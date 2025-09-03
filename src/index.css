@@ -2,9 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+codex/define-css-variable-for-translate-transform
+@import "./styles/dark-mode.css";
+@import "./styles/sidebar.css";
+
+main
 :root {
   --background: 222.86 84% 4.9%;
-  --foreground: 210 40% 85%;
+  --foreground: 210 40% 85%;  
   --card: 225 59% 10.6%;
   --card-foreground: 210 40% 98%;
   --popover: 225 59% 10.6%;
