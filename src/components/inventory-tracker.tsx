@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Plus, Trash2, Package, TrendingUp, Calculator, Edit2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { CurrencyInput } from "@/components/ui/currency-input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -192,13 +193,12 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Package className="h-5 w-5 text-primary" />
-            <CardTitle className="text-foreground/85">Inventory Tracker</CardTitle>
+            <CardTitle className="text-muted-foreground">Inventory Tracker</CardTitle>
           </div>
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
-              <Button 
-                size="sm" 
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              <Button
+                size="sm"
                 onClick={() => {
                   setEditingBatch(null);
                   resetForm();
@@ -210,14 +210,14 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
             </DialogTrigger>
             <DialogContent className="bg-background border-2 border-primary/20">
               <DialogHeader>
-                <DialogTitle className="text-foreground/85">
+                <DialogTitle className="text-muted-foreground">
                   {editingBatch ? "Edit Batch" : "Add New Batch"}
                 </DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="batchName" className="text-sm text-foreground/85">
+                    <Label htmlFor="batchName" className="text-sm text-muted-foreground">
                       Batch Name
                     </Label>
                     <Input
@@ -230,7 +230,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="productName" className="text-sm text-foreground/85">
+                    <Label htmlFor="productName" className="text-sm text-muted-foreground">
                       Product Name
                     </Label>
                     <Input
@@ -246,22 +246,19 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="totalPricePaid" className="text-sm text-foreground/85">
+                    <Label htmlFor="totalPricePaid" className="text-sm text-muted-foreground">
                       Total Price Paid
                     </Label>
-                    <Input
+                    <CurrencyInput
                       id="totalPricePaid"
-                      type="number"
-                      step="0.01"
                       value={formData.totalPricePaid}
                       onChange={(e) => setFormData(prev => ({ ...prev, totalPricePaid: e.target.value }))}
                       placeholder="0.00"
                       className="bg-input border-primary/30 text-foreground"
-                      required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="numberOfUnits" className="text-sm text-foreground/85">
+                    <Label htmlFor="numberOfUnits" className="text-sm text-muted-foreground">
                       Number of Units
                     </Label>
                     <Input
@@ -278,23 +275,20 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="projectedSaleCostPerUnit" className="text-sm text-foreground/85">
+                    <Label htmlFor="projectedSaleCostPerUnit" className="text-sm text-muted-foreground">
                       Projected Sale Price Per Unit
                     </Label>
-                    <Input
+                    <CurrencyInput
                       id="projectedSaleCostPerUnit"
-                      type="number"
-                      step="0.01"
                       value={formData.projectedSaleCostPerUnit}
                       onChange={(e) => setFormData(prev => ({ ...prev, projectedSaleCostPerUnit: e.target.value }))}
                       placeholder="0.00"
                       className="bg-input border-primary/30 text-foreground"
-                      required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-sm text-foreground/85">Unit Cost (Auto)</Label>
-                    <div className="flex items-center h-10 px-3 rounded-md border border-primary/30 bg-muted text-foreground/85">
+                    <Label className="text-sm text-muted-foreground">Unit Cost (Auto)</Label>
+                    <div className="flex items-center h-10 px-3 rounded-md border border-primary/30 bg-muted text-muted-foreground">
                       {formatCurrency(calculateUnitCost())}
                     </div>
                   </div>
@@ -302,7 +296,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
 
                 <div className="grid grid-cols-1 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="qtyInStock" className="text-sm text-foreground/85">
+                    <Label htmlFor="qtyInStock" className="text-sm text-muted-foreground">
                       Qty in Stock
                     </Label>
                     <Input
@@ -326,9 +320,8 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                   >
                     Cancel
                   </Button>
-                  <Button 
-                    type="submit" 
-                    className="bg-primary text-primary-foreground hover:bg-primary/90"
+                  <Button
+                    type="submit"
                     disabled={saveBatchMutation.isPending}
                   >
                     {saveBatchMutation.isPending ? "Saving..." : editingBatch ? "Update" : "Add"} Batch
@@ -341,9 +334,9 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
       </CardHeader>
       <CardContent>
         {isLoading ? (
-          <div className="text-center py-8 text-foreground/60">Loading batches...</div>
+          <div className="text-center py-8 text-muted-foreground">Loading batches...</div>
         ) : batches.length === 0 ? (
-          <div className="text-center py-8 text-foreground/60">
+          <div className="text-center py-8 text-muted-foreground">
             No inventory batches yet. Add your first batch to get started.
           </div>
         ) : (
@@ -365,7 +358,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <h3 className="font-medium text-foreground/85">{batch.batchName}</h3>
+                        <h3 className="font-medium text-muted-foreground">{batch.batchName}</h3>
                         <Badge variant="secondary" className="text-xs">
                           {batch.productName}
                         </Badge>
@@ -373,26 +366,26 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                       
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                         <div>
-                          <span className="text-foreground/60">Total Cost:</span>
-                          <div className="font-medium text-foreground/85">
+                          <span className="text-muted-foreground">Total Cost:</span>
+                          <div className="font-medium text-muted-foreground">
                             {formatCurrency(parseFloat(batch.totalPricePaid))}
                           </div>
                         </div>
                         <div>
-                          <span className="text-foreground/60">Unit Cost:</span>
-                          <div className="font-medium text-foreground/85">
+                          <span className="text-muted-foreground">Unit Cost:</span>
+                          <div className="font-medium text-muted-foreground">
                             {formatCurrency(parseFloat(batch.unitCost))}
                           </div>
                         </div>
                         <div>
-                          <span className="text-foreground/60">Projected Sale Price:</span>
-                          <div className="font-medium text-foreground/85">
+                          <span className="text-muted-foreground">Projected Sale Price:</span>
+                          <div className="font-medium text-muted-foreground">
                             {formatCurrency(parseFloat(batch.projectedSaleCostPerUnit || "0"))}
                           </div>
                         </div>
                         <div>
-                          <span className="text-foreground/60">Actual Sale Price:</span>
-                          <div className="font-medium text-foreground/85">
+                          <span className="text-muted-foreground">Actual Sale Price:</span>
+                          <div className="font-medium text-muted-foreground">
                             {formatCurrency(parseFloat(batch.actualSaleCostPerUnit || "0"))}
                           </div>
                         </div>
@@ -400,26 +393,32 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
 
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mt-2">
                         <div>
-                          <span className="text-foreground/60">In Stock:</span>
-                          <div className="font-medium text-foreground/85">
+                          <span className="text-muted-foreground">In Stock:</span>
+                          <div className="font-medium text-muted-foreground">
                             {batch.qtyInStock} / {batch.numberOfUnits}
                           </div>
                         </div>
                         <div>
-                          <span className="text-foreground/60">Sold:</span>
-                          <div className="font-medium text-foreground/85">
+                          <span className="text-muted-foreground">Sold:</span>
+                          <div className="font-medium text-muted-foreground">
                             {batch.qtySold || 0}
                           </div>
                         </div>
                         <div>
-                          <span className="text-foreground/60">Break Even (Units):</span>
-                          <div className="font-medium text-foreground/85">
+                          <span className="text-muted-foreground">Break Even (Units):</span>
+                          <div className="font-medium text-muted-foreground">
                             {breakEven.unitsToBreakEven > 0 ? `${breakEven.unitsToBreakEven} units` : "Set projected price"}
                           </div>
                         </div>
                         <div>
-                          <span className="text-foreground/60">Projected Profit/Unit:</span>
-                          <div className={`font-medium ${breakEven.projectedProfitPerUnit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          <span className="text-muted-foreground">Projected Profit/Unit:</span>
+                          <div
+                            className={`font-medium ${
+                              breakEven.projectedProfitPerUnit >= 0
+                                ? 'text-success'
+                                : 'text-destructive'
+                            }`}
+                          >
                             {formatCurrency(breakEven.projectedProfitPerUnit)}
                           </div>
                         </div>
@@ -427,7 +426,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
 
                       <Separator className="my-3" />
                       
-                      <div className="flex items-center gap-4 text-xs text-foreground/60">
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
                         <div className="flex items-center gap-1">
                           <Calculator className="h-3 w-3" />
                           Break-even: {breakEven.unitsToBreakEven > 0 ? `${breakEven.unitsToBreakEven} units` : "Set projected price"} 
@@ -463,7 +462,7 @@ export function InventoryTracker({ onBatchSelect, selectedBatchId }: InventoryTr
                             deleteBatchMutation.mutate(batch.id);
                           }
                         }}
-                        className="border-red-300 text-red-600 hover:bg-red-50 h-8 px-2"
+                        className="border-destructive/30 text-destructive hover:bg-destructive/10 h-8 px-2"
                       >
                         <Trash2 className="h-3 w-3" />
                       </Button>

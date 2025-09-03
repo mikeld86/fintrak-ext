@@ -6,7 +6,11 @@ import { InventoryTracker } from "@/components/inventory-tracker";
 import { SalesTracker } from "@/components/sales-tracker";
 import { useLocation } from "wouter";
 import type { InventoryBatch } from "@shared/schema";
-import fintrakLogo from "../assets/fintrak-logo.png";
+
+import blueLogo from "@/assets/Blue.svg";
+
+import blueLogo from "../assets/Blue.svg";
+
 
 export default function InventoryPage() {
   const [, setLocation] = useLocation();
@@ -15,6 +19,9 @@ export default function InventoryPage() {
   const handleBatchSelect = (batch: InventoryBatch) => {
     setSelectedBatch(batch);
   };
+
+  const { theme } = useTheme();
+  const logos = { blue: blueLogo, pink: pinkLogo, yellow: yellowLogo };
 
   return (
     <div className="min-h-screen bg-background">
@@ -27,20 +34,19 @@ export default function InventoryPage() {
                 variant="outline"
                 size="sm"
                 onClick={() => setLocation("/")}
-                className="border-primary/30"
               >
                 <ArrowLeft className="h-4 w-4 mr-1" />
                 Back to Financial Calculator
               </Button>
-              
+
               <div className="flex items-center gap-2">
                 <img
-                  src={fintrakLogo}
+                  src={logos[theme]}
                   alt="FINTRAK"
                   className="h-8 w-auto object-contain"
                 />
                 <div className="hidden sm:block">
-                  <h1 className="text-lg font-semibold text-foreground/85">
+                  <h1 className="text-lg font-semibold text-muted-foreground">
                     Inventory & Sales Tracker
                   </h1>
                 </div>
@@ -62,8 +68,8 @@ export default function InventoryPage() {
                     <Package className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-foreground/60">Inventory Management</p>
-                    <p className="text-lg font-semibold text-foreground/85">Track Batches</p>
+                    <p className="text-sm text-muted-foreground">Inventory Management</p>
+                    <p className="text-lg font-semibold text-muted-foreground">Track Batches</p>
                   </div>
                 </div>
               </CardContent>
@@ -76,8 +82,8 @@ export default function InventoryPage() {
                     <TrendingUp className="h-5 w-5 text-green-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-foreground/60">Sales Tracking</p>
-                    <p className="text-lg font-semibold text-foreground/85">Record Sales</p>
+                    <p className="text-sm text-muted-foreground">Sales Tracking</p>
+                    <p className="text-lg font-semibold text-muted-foreground">Record Sales</p>
                   </div>
                 </div>
               </CardContent>
@@ -90,8 +96,8 @@ export default function InventoryPage() {
                     <TrendingUp className="h-5 w-5 text-blue-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-foreground/60">Profit Analysis</p>
-                    <p className="text-lg font-semibold text-foreground/85">Break-even</p>
+                    <p className="text-sm text-muted-foreground">Profit Analysis</p>
+                    <p className="text-lg font-semibold text-muted-foreground">Break-even</p>
                   </div>
                 </div>
               </CardContent>
@@ -117,9 +123,9 @@ export default function InventoryPage() {
           {/* Instructions */}
           <Card className="border-2 border-primary/20 bg-primary/5">
             <CardHeader>
-              <CardTitle className="text-foreground/85 text-base">How to Use</CardTitle>
+              <CardTitle className="text-muted-foreground text-base">How to Use</CardTitle>
             </CardHeader>
-            <CardContent className="text-sm text-foreground/70 space-y-2">
+            <CardContent className="text-sm text-muted-foreground space-y-2">
               <p><strong>1. Create Inventory Batches:</strong> Add batches of products with total cost, units, and initial stock.</p>
               <p><strong>2. Track Sales:</strong> Select a batch and record individual sales with quantities, prices, and payment details.</p>
               <p><strong>3. Monitor Profitability:</strong> View real-time profit margins, break-even analysis, and outstanding balances.</p>

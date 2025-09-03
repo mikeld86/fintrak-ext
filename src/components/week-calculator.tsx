@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { CurrencyInput } from "@/components/ui/currency-input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { CalendarX, CalendarPlus, Plus, Trash2, X } from "lucide-react";
@@ -197,14 +198,12 @@ export function WeekCalculator({
           <Label className="text-sm font-medium text-muted-foreground">
             {weekNumber === 1 ? "Cash on Hand" : `Starting Balance (from Week ${weekNumber - 1})`}
           </Label>
-          <div className="relative mt-2">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
-            <Input
+          <div className="mt-2">
+            <CurrencyInput
               type="text"
               value={weekNumber === 1 ? cashOnHand.toFixed(2) : startingBalance.toFixed(2)}
               readOnly
-              className="pl-8 text-lg font-medium text-right bg-input text-foreground border-border"
-              step="0.01"
+              className="text-lg font-medium bg-input text-foreground border-border"
             />
           </div>
         </div>
@@ -230,7 +229,7 @@ export function WeekCalculator({
             <h3 className="text-sm font-medium text-muted-foreground">
               Income {weekNumber === 1 ? "This Week" : "Next Week"}
             </h3>
-            <Button onClick={addIncomeRow} size="sm" className="bg-primary text-white touch-manipulation">
+            <Button onClick={addIncomeRow} size="sm">
               <Plus className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Add Row</span>
               <span className="sm:hidden">Add</span>
@@ -243,25 +242,19 @@ export function WeekCalculator({
                   value={row.label}
                   onChange={(e) => updateIncomeRow(row.id, 'label', e.target.value)}
                   placeholder="Income source..."
-                  className="flex-1 text-base sm:text-sm touch-manipulation bg-input text-foreground border-border"
+                  className="flex-1 text-base bg-input text-foreground border-border"
                 />
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
-                  <Input
-                    type="number"
-                    inputMode="decimal"
-                    value={row.amount || ""}
-                    onChange={(e) => updateIncomeRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
-                    placeholder="0.00"
-                    className="w-28 sm:w-32 pl-8 text-right text-base sm:text-sm touch-manipulation bg-input text-foreground border-border"
-                    step="0.01"
-                  />
-                </div>
+                <CurrencyInput
+                  value={row.amount || ""}
+                  onChange={(e) => updateIncomeRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
+                  placeholder="0.00"
+                  className="w-28 sm:w-32 text-base bg-input text-foreground border-border"
+                />
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => removeIncomeRow(row.id)}
-                  className="text-destructive hover:text-destructive/80 p-2 touch-manipulation"
+                  className="text-destructive hover:text-destructive/80 p-2"
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -282,7 +275,7 @@ export function WeekCalculator({
             <h3 className="text-sm font-medium text-muted-foreground">
               Expenses {weekNumber === 1 ? "This Week" : "Next Week"}
             </h3>
-            <Button onClick={addExpenseRow} size="sm" className="bg-primary text-white touch-manipulation">
+            <Button onClick={addExpenseRow} size="sm">
               <Plus className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Add Row</span>
               <span className="sm:hidden">Add</span>
@@ -295,25 +288,19 @@ export function WeekCalculator({
                   value={row.label}
                   onChange={(e) => updateExpenseRow(row.id, 'label', e.target.value)}
                   placeholder="Expense item..."
-                  className="flex-1 text-base sm:text-sm touch-manipulation bg-input text-foreground border-border"
+                  className="flex-1 text-base bg-input text-foreground border-border"
                 />
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
-                  <Input
-                    type="number"
-                    inputMode="decimal"
-                    value={row.amount || ""}
-                    onChange={(e) => updateExpenseRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
-                    placeholder="0.00"
-                    className="w-28 sm:w-32 pl-8 text-right text-base sm:text-sm touch-manipulation bg-input text-foreground border-border"
-                    step="0.01"
-                  />
-                </div>
+                <CurrencyInput
+                  value={row.amount || ""}
+                  onChange={(e) => updateExpenseRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
+                  placeholder="0.00"
+                  className="w-28 sm:w-32 text-base bg-input text-foreground border-border"
+                />
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => removeExpenseRow(row.id)}
-                  className="text-destructive hover:text-destructive/80 p-2 touch-manipulation"
+                  className="text-destructive hover:text-destructive/80 p-2"
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>

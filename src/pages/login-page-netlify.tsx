@@ -1,3 +1,4 @@
+import logo from "@/assets/Blue.svg";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -53,10 +54,10 @@ export default function LoginPage() {
               <span className="text-white font-bold text-lg">F</span>
             </div>
           </div>
-          <CardTitle className="text-2xl text-foreground/85">
+          <CardTitle className="text-2xl text-muted-foreground">
             Welcome to FINTRAK
           </CardTitle>
-          <p className="text-sm text-foreground/60">
+          <p className="text-sm text-muted-foreground">
             Sign in to access your financial calculator
           </p>
         </CardHeader>
@@ -69,11 +70,11 @@ export default function LoginPage() {
             )}
             
             <div className="space-y-2">
-              <Label htmlFor="username" className="text-sm text-foreground/85">
+              <Label htmlFor="username" className="text-sm text-muted-foreground">
                 Username
               </Label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-foreground/40" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   id="username"
                   type="text"
@@ -87,11 +88,11 @@ export default function LoginPage() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-sm text-foreground/85">
+              <Label htmlFor="password" className="text-sm text-muted-foreground">
                 Password
               </Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-foreground/40" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   id="password"
                   type="password"
@@ -104,16 +105,16 @@ export default function LoginPage() {
               </div>
             </div>
             
-            <Button 
-              type="submit" 
-              className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+            <Button
+              type="submit"
+              className="w-full"
               disabled={isLoading}
             >
               {isLoading ? "Signing in..." : "Sign In"}
             </Button>
           </form>
           
-          <div className="mt-6 text-center text-xs text-foreground/60">
+          <div className="mt-6 text-center text-xs text-muted-foreground">
             <p>Demo credentials: admin / fintrak2025</p>
           </div>
         </CardContent>

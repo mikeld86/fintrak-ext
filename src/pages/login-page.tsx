@@ -8,7 +8,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Eye, EyeOff, LogIn, Calculator } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import fintrakLogo from "../assets/fintrak-logo.png";
+
+import blueLogo from "@/assets/Blue.svg";
+import pinkLogo from "@/assets/Pink.svg";
+import yellowLogo from "@/assets/Yellow.svg";
+
+import blueLogo from "../assets/Blue.svg";
+import pinkLogo from "../assets/Pink.svg";
+import yellowLogo from "../assets/Yellow.svg";
+
 
 export default function LoginPage() {
   const [, setLocation] = useLocation();
@@ -43,6 +51,9 @@ export default function LoginPage() {
     loginMutation.mutate({ username, password });
   };
 
+  const { theme } = useTheme();
+  const logos = { blue: blueLogo, pink: pinkLogo, yellow: yellowLogo };
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -50,7 +61,7 @@ export default function LoginPage() {
           <CardHeader className="text-center pb-4">
             <div className="flex justify-center mb-4">
               <img
-                src={fintrakLogo}
+                src={logos[theme]}
                 alt="FINTRAK"
                 className="h-12 w-auto object-contain"
               />
@@ -65,7 +76,7 @@ export default function LoginPage() {
               )}
               
               <div className="space-y-2">
-                <Label htmlFor="username" className="text-sm font-medium text-foreground/85">
+                <Label htmlFor="username" className="text-sm font-medium text-muted-foreground">
                   Username
                 </Label>
                 <Input
@@ -80,7 +91,7 @@ export default function LoginPage() {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-medium text-foreground/85">
+                <Label htmlFor="password" className="text-sm font-medium text-muted-foreground">
                   Password
                 </Label>
                 <div className="relative">
@@ -97,7 +108,7 @@ export default function LoginPage() {
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                    className="absolute right-0 top-0 h-full px-3"
                     onClick={() => setShowPassword(!showPassword)}
                     disabled={loginMutation.isPending}
                   >
@@ -110,9 +121,9 @@ export default function LoginPage() {
                 </div>
               </div>
               
-              <Button 
-                type="submit" 
-                className="w-full bg-primary text-white hover:bg-primary/90"
+              <Button
+                type="submit"
+                className="w-full"
                 disabled={loginMutation.isPending}
               >
                 {loginMutation.isPending ? (

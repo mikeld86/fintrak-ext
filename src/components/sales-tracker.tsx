@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Plus, Trash2, ShoppingCart, DollarSign, FileText, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { CurrencyInput } from "@/components/ui/currency-input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -224,8 +225,8 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
     return (
       <Card className="border-2 border-primary/20">
         <CardContent className="pt-6">
-          <div className="text-center py-8 text-foreground/60">
-            <ShoppingCart className="h-12 w-12 mx-auto mb-3 text-foreground/40" />
+          <div className="text-center py-8 text-muted-foreground">
+            <ShoppingCart className="h-12 w-12 mx-auto mb-3 text-muted-foreground" />
             <p>Select an inventory batch to track sales</p>
           </div>
         </CardContent>
@@ -239,15 +240,14 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ShoppingCart className="h-5 w-5 text-primary" />
-            <CardTitle className="text-foreground/85">
+            <CardTitle className="text-muted-foreground">
               Sales Tracker - {selectedBatch.batchName}
             </CardTitle>
           </div>
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
-              <Button 
-                size="sm" 
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              <Button
+                size="sm"
                 onClick={resetForm}
               >
                 <Plus className="h-4 w-4 mr-1" />
@@ -256,12 +256,12 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
             </DialogTrigger>
             <DialogContent className="bg-background border-2 border-primary/20">
               <DialogHeader>
-                <DialogTitle className="text-foreground/85">Record New Sale</DialogTitle>
+                <DialogTitle className="text-muted-foreground">Record New Sale</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="qty" className="text-sm text-foreground/85">
+                    <Label htmlFor="qty" className="text-sm text-muted-foreground">
                       Quantity Sold
                     </Label>
                     <Input
@@ -282,45 +282,42 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                       className="bg-input border-primary/30 text-foreground"
                       required
                     />
-                    <div className="text-xs text-foreground/60">
+                    <div className="text-xs text-muted-foreground">
                       Available: {selectedBatch.qtyInStock} units
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="totalPrice" className="text-sm text-foreground/85">
+                    <Label htmlFor="totalPrice" className="text-sm text-muted-foreground">
                       Total Price
                     </Label>
-                    <Input
+                    <CurrencyInput
                       id="totalPrice"
-                      type="number"
-                      step="0.01"
                       value={formData.totalPrice}
                       onChange={(e) => {
                         const total = e.target.value;
                         const qty = parseInt(formData.qty) || 0;
-                        setFormData(prev => ({ 
-                          ...prev, 
+                        setFormData(prev => ({
+                          ...prev,
                           totalPrice: total,
                           pricePerUnit: qty > 0 && total ? (parseFloat(total) / qty).toString() : "0"
                         }));
                       }}
                       placeholder="0.00"
                       className="bg-input border-primary/30 text-foreground"
-                      required
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4">
                   <div className="space-y-2">
-                    <Label className="text-sm text-foreground/85">Price Per Unit (Auto-calculated)</Label>
-                    <div className="flex items-center h-10 px-3 rounded-md border border-primary/30 bg-muted text-foreground/85">
+                    <Label className="text-sm text-muted-foreground">Price Per Unit (Auto-calculated)</Label>
+                    <div className="flex items-center h-10 px-3 rounded-md border border-primary/30 bg-muted text-muted-foreground">
                       {formData.qty && formData.totalPrice ? 
                         formatCurrency(parseFloat(formData.totalPrice) / parseInt(formData.qty)) : 
                         formatCurrency(0)
                       }
                     </div>
-                    <div className="text-xs text-foreground/60">
+                    <div className="text-xs text-muted-foreground">
                       Projected: {formatCurrency(parseFloat(selectedBatch.projectedSaleCostPerUnit || "0"))}
                     </div>
                   </div>
@@ -328,30 +325,27 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="amountPaid" className="text-sm text-foreground/85">
+                    <Label htmlFor="amountPaid" className="text-sm text-muted-foreground">
                       Amount Paid
                     </Label>
-                    <Input
+                    <CurrencyInput
                       id="amountPaid"
-                      type="number"
-                      step="0.01"
                       value={formData.amountPaid}
                       onChange={(e) => setFormData(prev => ({ ...prev, amountPaid: e.target.value }))}
                       placeholder="0.00"
                       className="bg-input border-primary/30 text-foreground"
-                      required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-sm text-foreground/85">Balance Owing (Auto)</Label>
-                    <div className="flex items-center h-10 px-3 rounded-md border border-primary/30 bg-muted text-foreground/85">
+                    <Label className="text-sm text-muted-foreground">Balance Owing (Auto)</Label>
+                    <div className="flex items-center h-10 px-3 rounded-md border border-primary/30 bg-muted text-muted-foreground">
                       {formatCurrency(calculateBalance())}
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="notes" className="text-sm text-foreground/85">
+                  <Label htmlFor="notes" className="text-sm text-muted-foreground">
                     Notes (Optional)
                   </Label>
                   <Textarea
@@ -373,9 +367,8 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                   >
                     Cancel
                   </Button>
-                  <Button 
-                    type="submit" 
-                    className="bg-primary text-primary-foreground hover:bg-primary/90"
+                  <Button
+                    type="submit"
                     disabled={addSaleMutation.isPending}
                   >
                     {addSaleMutation.isPending ? "Saving..." : "Record Sale"}
@@ -390,26 +383,34 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
         {/* Sales Summary */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 rounded-lg bg-primary/5 border border-primary/20">
           <div className="text-center">
-            <div className="text-sm text-foreground/60">Total Revenue</div>
-            <div className="text-lg font-semibold text-foreground/85">
+            <div className="text-sm text-muted-foreground">Total Revenue</div>
+            <div className="text-lg font-semibold text-muted-foreground">
               {formatCurrency(summary.totalRevenue)}
             </div>
           </div>
           <div className="text-center">
-            <div className="text-sm text-foreground/60">Units Sold</div>
-            <div className="text-lg font-semibold text-foreground/85">
+            <div className="text-sm text-muted-foreground">Units Sold</div>
+            <div className="text-lg font-semibold text-muted-foreground">
               {summary.totalSold}
             </div>
           </div>
           <div className="text-center">
-            <div className="text-sm text-foreground/60">Profit</div>
-            <div className={`text-lg font-semibold ${summary.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+            <div className="text-sm text-muted-foreground">Profit</div>
+            <div
+              className={`text-lg font-semibold ${
+                summary.profit >= 0 ? 'text-success' : 'text-destructive'
+              }`}
+            >
               {formatCurrency(summary.profit)}
             </div>
           </div>
           <div className="text-center">
-            <div className="text-sm text-foreground/60">Margin</div>
-            <div className={`text-lg font-semibold ${summary.profitMargin >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+            <div className="text-sm text-muted-foreground">Margin</div>
+            <div
+              className={`text-lg font-semibold ${
+                summary.profitMargin >= 0 ? 'text-success' : 'text-destructive'
+              }`}
+            >
               {summary.profitMargin.toFixed(1)}%
             </div>
           </div>
@@ -417,9 +418,9 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
 
         {/* Sales Records */}
         {isLoading ? (
-          <div className="text-center py-8 text-foreground/60">Loading sales records...</div>
+          <div className="text-center py-8 text-muted-foreground">Loading sales records...</div>
         ) : salesRecords.length === 0 ? (
-          <div className="text-center py-8 text-foreground/60">
+          <div className="text-center py-8 text-muted-foreground">
             No sales recorded yet. Add your first sale to get started.
           </div>
         ) : (
@@ -435,33 +436,39 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                       <Badge variant="secondary" className="text-xs">
                         {record.qty} units
                       </Badge>
-                      <span className="text-xs text-foreground/60">
+                      <span className="text-xs text-muted-foreground">
                         {new Date(record.createdAt!).toLocaleDateString()}
                       </span>
                     </div>
                     
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                       <div>
-                        <span className="text-foreground/60">Total Price:</span>
-                        <div className="font-medium text-foreground/85">
+                        <span className="text-muted-foreground">Total Price:</span>
+                        <div className="font-medium text-muted-foreground">
                           {formatCurrency(parseFloat(record.totalPrice))}
                         </div>
                       </div>
                       <div>
-                        <span className="text-foreground/60">Amount Paid:</span>
-                        <div className="font-medium text-foreground/85">
+                        <span className="text-muted-foreground">Amount Paid:</span>
+                        <div className="font-medium text-muted-foreground">
                           {formatCurrency(parseFloat(record.amountPaid))}
                         </div>
                       </div>
                       <div>
-                        <span className="text-foreground/60">Balance Owing:</span>
-                        <div className={`font-medium ${parseFloat(record.balanceOwing) > 0 ? 'text-red-600' : 'text-green-600'}`}>
+                        <span className="text-muted-foreground">Balance Owing:</span>
+                        <div
+                          className={`font-medium ${
+                            parseFloat(record.balanceOwing) > 0
+                              ? 'text-destructive'
+                              : 'text-success'
+                          }`}
+                        >
                           {formatCurrency(parseFloat(record.balanceOwing))}
                         </div>
                       </div>
                       <div>
-                        <span className="text-foreground/60">Unit Price:</span>
-                        <div className="font-medium text-foreground/85">
+                        <span className="text-muted-foreground">Unit Price:</span>
+                        <div className="font-medium text-muted-foreground">
                           {formatCurrency(parseFloat(record.totalPrice) / record.qty)}
                         </div>
                       </div>
@@ -471,8 +478,8 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                       <>
                         <Separator className="my-3" />
                         <div className="flex items-start gap-2 text-sm">
-                          <FileText className="h-4 w-4 text-foreground/40 mt-0.5" />
-                          <span className="text-foreground/70">{record.notes}</span>
+                          <FileText className="h-4 w-4 text-muted-foreground mt-0.5" />
+                          <span className="text-muted-foreground">{record.notes}</span>
                         </div>
                       </>
                     )}
@@ -486,7 +493,7 @@ export function SalesTracker({ selectedBatch }: SalesTrackerProps) {
                         deleteSaleMutation.mutate(record.id);
                       }
                     }}
-                    className="border-red-300 text-red-600 hover:bg-red-50 h-8 px-2 ml-4"
+                    className="border-destructive/30 text-destructive hover:bg-destructive/10 h-8 px-2 ml-4"
                   >
                     <Trash2 className="h-3 w-3" />
                   </Button>

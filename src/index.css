@@ -2,98 +2,119 @@
 @tailwind components;
 @tailwind utilities;
 
+codex/define-css-variable-for-translate-transform
 @import "./styles/dark-mode.css";
 @import "./styles/sidebar.css";
 
+main
 :root {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 85%;
-  --card: 217.2 32.6% 17.5%;
+  --background: 222.86 84% 4.9%;
+  --foreground: 210 40% 85%;  
+  --card: 225 59% 10.6%;
   --card-foreground: 210 40% 98%;
-  --popover: 217.2 32.6% 17.5%;
+  --popover: 225 59% 10.6%;
   --popover-foreground: 210 40% 98%;
   --primary: 217.2 91.2% 59.8%;
   --primary-foreground: 210 40% 98%;
-  --secondary: 217.2 32.6% 17.5%;
+  --secondary: 225 59% 10.6%;
   --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
+  --muted: 225 59% 10.6%;
   --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
+  --accent: 225 59% 10.6%;
   --accent-foreground: 210 40% 98%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 210 40% 98%;
-  --border: 217.2 91.2% 59.8%;
-  --card-border: 217.2 91.2% 59.8%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 217.2 91.2% 59.8%;
+  --input: 222.86 84% 4.9%;
+  /* Match border and ring colors to the current theme */
+  --ring: var(--primary);
+  --border: var(--primary);
+  --card-border: var(--primary);
   --radius: 0.75rem;
 }
 
-/* Override input styling for dark theme */
-.dark-input {
-  @apply bg-input text-foreground border-[0.5px] border-primary/70;
+.dark {
+  --foreground: 210 40% 98%;
+  --card: 225 59% 10.6%;
+  --popover: 225 59% 10.6%;
+  --input: 222.86 84% 4.9%;
+  --primary: 217 91% 60%;
+  --primary-foreground: 222.86 84% 4.9%;
+  /* Dark mode specific charts */
+  --chart-1: 220 70% 50%;
+  --chart-2: 160 60% 45%;
+  --chart-3: 30 80% 55%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground: 210 40% 98%;
+    --card: 225 59% 10.6%;
+    --popover: 225 59% 10.6%;
+    --input: 222.86 84% 4.9%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 222.86 84% 4.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
 
-/* Ensure proper text contrast */
-.text-muted {
-  @apply text-muted-foreground;
+/* Override input styling for dark theme */
+@layer components {
+  .dark-input {
+    @apply bg-input text-foreground border-primary border-opacity-70;
+    border-width: 0.5px;
+  }
+
+  .text-muted {
+    @apply text-muted-foreground;
+  }
 }
 
 /* Theme color variations - iOS color palette */
-body[data-theme="blue"] {
-  --primary: hsl(211 100% 50%); /* #007AFF */
-  --primary-foreground: hsl(0 0% 100%);
-}
+body
 
-body[data-theme="pink"] {
-  --primary: hsl(343 100% 59%); /* #FF2D55 */
-  --primary-foreground: hsl(0 0% 100%);
-}
+body
 
-body[data-theme="green"] {
-  --primary: hsl(133 73% 63%); /* #4CD964 */
-  --primary-foreground: hsl(0 0% 0%);
-}
+body
+body.dark
 
-body[data-theme="orange"] {
-  --primary: hsl(35 100% 50%); /* #FF9500 */
-  --primary-foreground: hsl(0 0% 0%);
-}
+body.dark
 
-body[data-theme="red"] {
-  --primary: hsl(355 100% 59%); /* #FF3B30 */
-  --primary-foreground: hsl(0 0% 100%);
-}
+body.dark
 
 /* Enhanced contrast for mobile light mode */
 @media (max-width: 768px) {
   :not(.dark) .text-gray-500 {
-    color: hsl(210 25% 40%);
+    color: hsl(210, 25%, 40%);
   }
 
   :not(.dark) .text-gray-600 {
-    color: hsl(210 25% 30%);
+    color: hsl(210, 25%, 30%);
   }
 
   :not(.dark) .text-gray-700 {
-    color: hsl(210 25% 20%);
+    color: hsl(210, 25%, 20%);
   }
 
   :not(.dark) .border-gray-200 {
-    border-color: hsl(210 25% 75%);
+    border-color: hsl(210, 25%, 75%);
   }
 
   :not(.dark) .border-gray-300 {
-    border-color: hsl(210 25% 65%);
+    border-color: hsl(210, 25%, 65%);
   }
 
   :not(.dark) .bg-gray-50 {
-    background-color: hsl(210 25% 96%);
+    background-color: hsl(210, 25%, 96%);
   }
 
   :not(.dark) .bg-gray-100 {
-    background-color: hsl(210 25% 90%);
+    background-color: hsl(210, 25%, 90%);
   }
 }
 
@@ -101,7 +122,7 @@ body[data-theme="red"] {
   /* Space Grotesk font applied globally */
   body {
     @apply font-sans antialiased;
-    font-family: "Space Grotesk", var(--font-sans), sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     color: hsl(var(--foreground));
     background: hsl(var(--background));
   }
@@ -113,11 +134,6 @@ body[data-theme="red"] {
       min-height: 44px; /* iOS recommended touch target size */
     }
     
-    /* Improve touch targets */
-    .touch-manipulation {
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-    }
   }
 
   /* iOS specific optimizations */

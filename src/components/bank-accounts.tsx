@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
+import { CurrencyInput } from "@/components/ui/currency-input";
 import { Button } from "@/components/ui/button";
 import { Building2, Plus, Trash2 } from "lucide-react";
 import { FinancialRow } from "@shared/schema";
@@ -84,7 +85,7 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Building2 className="mr-3 h-5 w-5 text-primary" />
-            <h3 className="text-sm font-medium text-foreground/85">
+            <h3 className="text-sm font-medium text-muted-foreground">
               Bank Accounts
             </h3>
           </div>
@@ -92,7 +93,7 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
             <div className="text-lg font-bold text-primary">
               {formatCurrency(totalBalance)}
             </div>
-            <Button onClick={addBankAccountRow} size="sm" className="bg-primary text-white touch-manipulation">
+            <Button onClick={addBankAccountRow} size="sm">
               <Plus className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Add Account</span>
               <span className="sm:hidden">Add</span>
@@ -107,25 +108,19 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
                 value={row.label}
                 onChange={(e) => updateBankAccountRow(row.id, 'label', e.target.value)}
                 placeholder="Account name..."
-                className="flex-1 text-base sm:text-sm touch-manipulation"
+                className="flex-1 text-base"
               />
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
-                <Input
-                  type="number"
-                  inputMode="decimal"
-                  value={row.amount || ""}
-                  onChange={(e) => updateBankAccountRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
-                  placeholder="0.00"
-                  className="w-28 sm:w-32 pl-8 text-right text-base sm:text-sm touch-manipulation"
-                  step="0.01"
-                />
-              </div>
+              <CurrencyInput
+                value={row.amount || ""}
+                onChange={(e) => updateBankAccountRow(row.id, 'amount', parseFloat(e.target.value) || 0)}
+                placeholder="0.00"
+                className="w-28 sm:w-32 text-base"
+              />
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => removeBankAccountRow(row.id)}
-                className="text-red-500 hover:text-red-700 p-2 touch-manipulation"
+                className="text-destructive hover:text-destructive/80 p-2"
               >
                 <Trash2 className="h-4 w-4" />
               </Button>
@@ -143,7 +138,7 @@ export function BankAccounts({ bankAccountRows: initialBankAccountRows, onUpdate
         {bankAccountRows.length > 0 && (
           <div className="border-t border-border pt-3">
             <div className="flex justify-between items-center">
-              <span className="text-sm font-medium text-foreground/85">
+              <span className="text-sm font-medium text-muted-foreground">
                 Total Bank Balance:
               </span>
               <span className="text-sm font-semibold text-primary">
