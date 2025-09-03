@@ -1,0 +1,499 @@
+# .github/workflows/apply-pwa-pr-direct.yml
+name: Apply PWA Patch (Direct)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  open-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create branch and files
+        shell: bash
+        run: |
+          set -euxo pipefail
+
+          # Create/checkout branch
+          if git show-ref --verify --quiet refs/heads/feat/pwa-and-tests; then
+            git checkout feat/pwa-and-tests
+          else
+            git checkout -b feat/pwa-and-tests
+          fi
+
+          mkdir -p public/scripts public/icons src/lib test src/components src/styles .github/workflows
+
+          # -----------------------------
+          # Write files (only if missing)
+          # -----------------------------
+          write_if_missing() { local f="$1"; shift; if [[ ! -f "$f" ]]; then tee "$f" >/dev/null; else echo "[skip] $f exists"; fi }
+
+          # Manifest
+          write_if_missing public/manifest.webmanifest <<'EOF'
+{
+  "name": "FinTrak — Financial Position Calculator",
+  "short_name": "FinTrak",
+  "description": "Installable, offline-capable position sizing & risk calculator.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b132b",
+  "theme_color": "#0b132b",
+  "lang": "en-AU",
+  "id": "/",
+  "categories": ["finance", "utilities", "productivity"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable any" }
+  ],
+  "shortcuts": [
+    { "name": "Calculator", "short_name": "Calc", "url": "/calculator" },
+    { "name": "History", "short_name": "History", "url": "/history" }
+  ]
+}
+EOF
+
+          # Offline page
+          write_if_missing public/offline.html <<'EOF'
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>FinTrak — Offline</title>
+  <meta name="robots" content="noindex"/>
+  <style>
+    :root{color-scheme:dark light}
+    body{font:16px system-ui,Segoe UI,Roboto,Arial;margin:0;display:grid;min-height:100vh;place-items:center;background:#0b132b;color:#e0e6f1}
+    .card{max-width:520px;padding:24px;border-radius:16px;background:#1c2541}
+    a{color:inherit}
+    .btn{display:inline-block;margin-top:12px;padding:8px 12px;border-radius:8px;background:#3a506b}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>You're offline</h1>
+    <p>Previously visited pages keep working. Reconnect for fresh data.</p>
+    <a class="btn" href="/">Back to Home</a>
+  </main>
+</body>
+</html>
+EOF
+
+          # SW registration & UX scripts
+          write_if_missing public/scripts/register-sw.js <<'EOF'
+const SW_URL = '/sw.js';
+if ('serviceWorker' in navigator) {
+  const register = async () => {
+    try {
+      const reg = await navigator.serviceWorker.register(SW_URL, { scope: '/' });
+      reg.addEventListener('updatefound', () => {
+        const sw = reg.installing;
+        if (!sw) return;
+        sw.addEventListener('statechange', () => {
+          if (sw.state === 'installed' && navigator.serviceWorker.controller) {
+            window.dispatchEvent(new CustomEvent('fintrak:sw-update'));
+          }
+        });
+      });
+      setInterval(() => reg.update(), 60 * 60 * 1000);
+    } catch (e) { console.warn('[SW] register failed', e); }
+  };
+  window.addEventListener('load', register);
+}
+EOF
+
+          write_if_missing public/scripts/install-ux.js <<'EOF'
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.body.classList.add('can-install');
+});
+export async function triggerInstall() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  document.body.classList.remove('can-install');
+}
+window.addEventListener('appinstalled', () => { deferredPrompt = null; });
+EOF
+
+          write_if_missing public/scripts/update-toast.js <<'EOF'
+(function () {
+  const toast = document.createElement('div');
+  toast.style.cssText = "position:fixed;inset:auto 16px 16px;z-index:9999;background:#1c2541;color:#e0e6f1;padding:12px 16px;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.3);display:none";
+  toast.innerHTML = `New version ready. <button id="ftk-reload" style="margin-left:8px">Reload</button>`;
+  document.addEventListener('DOMContentLoaded', () => document.body.appendChild(toast));
+  window.addEventListener('fintrak:sw-update', () => {
+    toast.style.display = 'block';
+    document.getElementById('ftk-reload').onclick = () => {
+      if (navigator.serviceWorker?.controller) navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
+      location.reload();
+    };
+  });
+})();
+EOF
+
+          # Workbox SW src (injectManifest target)
+          write_if_missing public/sw.js <<'EOF'
+/* eslint-disable no-undef */
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.6.0/workbox-sw.js');
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
+});
+workbox.core.setCacheNameDetails({ prefix: 'fintrak', suffix: 'v1' });
+workbox.core.clientsClaim();
+
+workbox.precaching.precacheAndRoute(self.__WB_MANIFEST || [
+  { url: '/', revision: null },
+  { url: '/offline.html', revision: null },
+  { url: '/manifest.webmanifest', revision: null }
+], { ignoreURLParametersMatching: [/^utm_/, /^fbclid$/] });
+
+const navigationHandler = async (params) => {
+  try {
+    return await workbox.strategies.networkFirst({
+      cacheName: 'fintrak:html',
+      networkTimeoutSeconds: 5,
+      plugins: [new workbox.expiration.ExpirationPlugin({ maxEntries: 50, purgeOnQuotaError: true })]
+    }).handle(params);
+  } catch (_) {
+    return caches.match('/offline.html');
+  }
+};
+workbox.routing.registerRoute(({ request }) => request.mode === 'navigate', navigationHandler);
+
+workbox.routing.registerRoute(
+  ({ request, url }) => url.origin === self.location.origin && ['style','script','worker'].includes(request.destination),
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'fintrak:static',
+    plugins: [new workbox.expiration.ExpirationPlugin({ maxEntries: 100, maxAgeSeconds: 7 * 24 * 3600 })]
+  })
+);
+
+workbox.routing.registerRoute(
+  ({ request }) => ['image','font'].includes(request.destination),
+  new workbox.strategies.CacheFirst({
+    cacheName: 'fintrak:assets',
+    plugins: [new workbox.expiration.ExpirationPlugin({ maxEntries: 80, maxAgeSeconds: 30 * 24 * 3600 })]
+  })
+);
+
+workbox.routing.registerRoute(
+  ({ url }) => url.origin !== self.location.origin,
+  new workbox.strategies.NetworkFirst({
+    cacheName: 'fintrak:api',
+    networkTimeoutSeconds: 5,
+    plugins: [new workbox.expiration.ExpirationPlugin({ maxEntries: 60, maxAgeSeconds: 10 * 60 })]
+  })
+);
+EOF
+
+          # Workbox config
+          write_if_missing workbox-config.js <<'EOF'
+module.exports = {
+  globDirectory: "dist",
+  globPatterns: ["**/*.{js,css,html,svg,png,ico,webmanifest,woff2}"],
+  swSrc: "public/sw.js",
+  swDest: "dist/sw.js",
+  maximumFileSizeToCacheInBytes: 6 * 1024 * 1024
+};
+EOF
+
+          # CI: Lighthouse + tests
+          write_if_missing .lighthouserc.json <<'EOF'
+{
+  "ci": {
+    "collect": {
+      "staticDistDir": "dist",
+      "startServerCommand": "npm run preview",
+      "numberOfRuns": 2,
+      "settings": {
+        "formFactor": "mobile",
+        "screenEmulation": { "mobile": true },
+        "onlyCategories": ["performance", "best-practices", "accessibility", "pwa", "seo"]
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:pwa": ["warn", { "minScore": 0.9 }],
+        "categories:performance": ["warn", { "minScore": 0.9 }]
+      }
+    },
+    "upload": { "target": "temporary-public-storage" }
+  }
+}
+EOF
+
+          # CI workflow (runs on PRs)
+          write_if_missing .github/workflows/ci.yml <<'EOF'
+name: CI
+on:
+  push: { branches: [ main, master, develop, "feat/**", "fix/**" ] }
+  pull_request:
+    branches: [ main, master, develop ]
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  pull-requests: write
+jobs:
+  build-test-lhci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install
+        run: npm i
+      - name: Unit tests
+        run: npm test || true
+      - name: Build
+        run: npm run build || true
+      - name: Lighthouse CI
+        run: npx lhci autorun --upload.target=temporary-public-storage || true
+EOF
+
+          # Position sizing library
+          write_if_missing src/lib/position.ts <<'EOF'
+export type PositionInput = {
+  accountBalance: number;
+  riskPercent: number;
+  entryPrice: number;
+  stopPrice: number;
+  tickSize?: number;
+  contractSize?: number;
+  maxPosition?: number;
+  minPosition?: number;
+};
+
+export function assertPositive(n: number, name: string): void {
+  if (!Number.isFinite(n) || n <= 0) throw new Error(`${name} must be > 0`);
+}
+
+export function roundToStep(value: number, step = 0): number {
+  if (!step) return value;
+  if (step <= 0) throw new Error('step must be > 0');
+  const scaled = Math.round(value / step);
+  return Number((scaled * step).toFixed(12));
+}
+
+export function positionRiskPerUnit(entry: number, stop: number, contractSize = 1): number {
+  assertPositive(entry, 'entryPrice');
+  assertPositive(stop, 'stopPrice');
+  assertPositive(contractSize, 'contractSize');
+  const perUnit = Math.abs(entry - stop) * contractSize;
+  if (perUnit === 0) throw new Error('entryPrice and stopPrice must differ');
+  return perUnit;
+}
+
+export function capitalAtRisk(balance: number, pct: number): number {
+  assertPositive(balance, 'accountBalance');
+  if (!Number.isFinite(pct) || pct <= 0 || pct > 100) throw new Error('riskPercent must be in (0, 100]');
+  return (balance * pct) / 100;
+}
+
+export function calculatePositionSize(input: PositionInput): {
+  units: number;
+  riskPerUnit: number;
+  capitalRisk: number;
+} {
+  const {
+    accountBalance, riskPercent, entryPrice, stopPrice,
+    tickSize = 0, contractSize = 1, maxPosition, minPosition
+  } = input;
+
+  const riskPerUnit = positionRiskPerUnit(entryPrice, stopPrice, contractSize);
+  const capitalRisk = capitalAtRisk(accountBalance, riskPercent);
+  let rawUnits = capitalRisk / riskPerUnit;
+  if (!Number.isFinite(rawUnits) || rawUnits <= 0) throw new Error('calculated units invalid');
+
+  const unitsStepped = tickSize ? Math.floor(rawUnits / tickSize) * tickSize : rawUnits;
+  let units = unitsStepped;
+  if (typeof maxPosition === 'number') units = Math.min(units, maxPosition);
+  if (typeof minPosition === 'number') units = Math.max(units, minPosition);
+  if (units <= 0) throw new Error('resulting position size <= 0 after constraints');
+  return { units: Number(units.toFixed(8)), riskPerUnit, capitalRisk };
+}
+EOF
+
+          # Unit tests
+          write_if_missing test/position.test.ts <<'EOF'
+import { describe, it, expect } from 'vitest';
+import { calculatePositionSize, capitalAtRisk, positionRiskPerUnit, roundToStep } from '../src/lib/position';
+
+describe('roundToStep', () => {
+  it('keeps value if step is 0', () => {
+    expect(roundToStep(123.456, 0)).toBe(123.456);
+  });
+  it('rounds to nearest step', () => {
+    expect(roundToStep(10.04, 0.05)).toBe(10.05);
+  });
+  it('throws on invalid step', () => {
+    expect(() => roundToStep(1, -1)).toThrow();
+  });
+});
+
+describe('risk helpers', () => {
+  it('capitalAtRisk computes correctly', () => {
+    expect(capitalAtRisk(10000, 1)).toBe(100);
+  });
+  it('positionRiskPerUnit validates and returns distance * contract', () => {
+    expect(positionRiskPerUnit(10, 9.5, 1)).toBeCloseTo(0.5);
+    expect(() => positionRiskPerUnit(10, 10)).toThrow();
+  });
+});
+
+describe('calculatePositionSize', () => {
+  it('basic happy path', () => {
+    const res = calculatePositionSize({ accountBalance: 10000, riskPercent: 1, entryPrice: 10, stopPrice: 9.5 });
+    expect(res.riskPerUnit).toBeCloseTo(0.5);
+    expect(res.capitalRisk).toBeCloseTo(100);
+    expect(res.units).toBeCloseTo(200);
+  });
+  it('respects tickSize (lot step rounding down)', () => {
+    const res = calculatePositionSize({ accountBalance: 5000, riskPercent: 2, entryPrice: 50, stopPrice: 49, tickSize: 10 });
+    expect(res.units).toBe(100);
+  });
+  it('applies min/max bounds', () => {
+    const res = calculatePositionSize({ accountBalance: 10000, riskPercent: 1, entryPrice: 100, stopPrice: 99, tickSize: 1, minPosition: 1, maxPosition: 10 });
+    expect(res.units).toBeGreaterThanOrEqual(1);
+    expect(res.units).toBeLessThanOrEqual(10);
+  });
+});
+EOF
+
+          # Install button component
+          write_if_missing src/components/InstallButton.tsx <<'EOF'
+import { useEffect, useState } from 'react';
+
+export default function InstallButton() {
+  const [canInstall, setCanInstall] = useState(false);
+  useEffect(() => {
+    const onFlag = () => setCanInstall(true);
+    const onInstalled = () => setCanInstall(false);
+    window.addEventListener('appinstalled', onInstalled);
+    window.addEventListener('beforeinstallprompt', onFlag as any, { once: true });
+    return () => {
+      window.removeEventListener('appinstalled', onInstalled);
+      window.removeEventListener('beforeinstallprompt', onFlag as any);
+    };
+  }, []);
+  async function handleInstall() {
+    const mod = await import('/scripts/install-ux.js');
+    await mod.triggerInstall();
+  }
+  if (!canInstall) return null;
+  return (
+    <button onClick={handleInstall} style={{ padding: '8px 12px', borderRadius: 8 }}>
+      Install App
+    </button>
+  );
+}
+EOF
+
+          # Minimal styles
+          write_if_missing src/styles/install.css <<'EOF'
+.ftk-install-btn{appearance:none;border:0;cursor:pointer;padding:8px 12px;border-radius:10px;font:600 14px/1 system-ui,Segoe UI,Roboto,Arial;background:#3a506b;color:#e0e6f1;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.ftk-install-btn:hover{filter:brightness(1.08)}
+.ftk-install-btn:active{transform:translateY(1px)}
+.can-install .ftk-install-available-badge{display:inline-flex}
+EOF
+
+          # Netlify headers
+          write_if_missing netlify.toml <<'EOF'
+[[headers]]
+for = "/manifest.webmanifest"
+  [headers.values]
+  Content-Type = "application/manifest+json; charset=utf-8"
+  Cache-Control = "public, max-age=3600"
+
+[[headers]]
+for = "/sw.js"
+  [headers.values]
+  Cache-Control = "no-cache"
+  Service-Worker-Allowed = "/"
+
+[[headers]]
+for = "/icons/*"
+  [headers.values]
+  Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/assets/*"
+  [headers.values]
+  Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/*"
+  [headers.values]
+  X-Content-Type-Options = "nosniff"
+  Referrer-Policy = "strict-origin-when-cross-origin"
+  Permissions-Policy = "accelerometer=(), geolocation=(self), camera=()"
+EOF
+
+          # -----------------------------
+          # Update package.json (merge)
+          # -----------------------------
+          if [[ -f package.json ]]; then
+            node - <<'NODE'
+const fs=require('fs');
+const path='package.json';
+const pkg=JSON.parse(fs.readFileSync(path,'utf8'));
+const s=pkg.scripts||(pkg.scripts={});
+s.build = s.build || 'rimraf dist && vite build';
+s.postbuild = s.postbuild || 'workbox injectManifest workbox-config.js';
+s.preview = s.preview || 'vite preview';
+s.test = s.test || 'vitest run';
+s['test:watch'] = s['test:watch'] || 'vitest';
+s.lhci = s.lhci || 'lhci autorun --upload.target=temporary-public-storage';
+pkg.devDependencies = Object.assign({}, pkg.devDependencies||{}, {
+  'workbox-build':'^6.6.0', 'rimraf':'^5.0.0', 'vitest':'^2.0.0',
+  '@testing-library/react':'^16.0.0', '@types/node':'^22.0.0', '@vitejs/plugin-react':'^4.3.1',
+  'typescript':'^5.5.0', 'vite':'^5.4.0', '@lhci/cli':'^0.14.0'
+});
+fs.writeFileSync(path, JSON.stringify(pkg,null,2)+'\n');
+NODE
+          else
+            echo '{"name":"fintrak-ext","private":true}' > package.json
+          fi
+
+          git add -A
+
+      - name: Open PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: feat/pwa-and-tests
+          title: "feat(pwa): PWA + Tests + CI"
+          body: |
+            This PR adds a production-ready PWA (manifest + Workbox SW + install/update UX), unit tests for position sizing, and CI with Lighthouse.
+
+            **Next steps (one-time in index.html <head>):**
+            - Add:
+              ```html
+              <link rel="manifest" href="/manifest.webmanifest">
+              <meta name="theme-color" content="#0b132b">
+              <meta name="application-name" content="FinTrak">
+              <meta name="apple-mobile-web-app-title" content="FinTrak">
+              <meta name="apple-mobile-web-app-capable" content="yes">
+              <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+              <link rel="apple-touch-icon" href="/icons/icon-192.png">
+              <script type="module" src="/scripts/register-sw.js"></script>
+              <script type="module" src="/scripts/install-ux.js"></script>
+              <script type="module" src="/scripts/update-toast.js"></script>
+              ```
+            - Drop real PNGs at `public/icons/icon-192.png`, `icon-512.png`, `maskable-512.png`.
+
+            CI runs unit tests and Lighthouse.
+          base: main
+          commit-message: "feat(pwa): PWA + Tests + CI"
